@@ -1,0 +1,11 @@
+{
+  "name": "e-learning-platform",
+  "version": "1.0.0",
+  "description": "Elearning platForm",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Khaled Hamada",
+  "license": "MIT"
+}
