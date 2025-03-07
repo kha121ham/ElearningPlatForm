@@ -1,65 +1,24 @@
-# Node.js dependencies
-node_modules/
-npm-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Environment variables
+# dependencies
+node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
 .env
 .env.local
-.env.development
-.env.test
-.env.production
+.env.development.local
+.env.test.local
+.env.production.local
 
-# Logs
-logs/
-*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-debug.log*
-
-# Build files
-dist/
-build/
-out/
-
-# Database
-*.sqlite
-*.sqlite3
-mongodb-data/
-dump/
-
-# React specific
-/.parcel-cache
-/.next
-/.vercel
-/.firebase
-/.expo
-/.turbo
-public/static/
-
-# Miscellaneous
-.DS_Store
-Thumbs.db
-
-# IDE and editor files
-.vscode/
-.idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-
-# Testing
-coverage/
-jest/
-cypress/videos/
-cypress/screenshots/
-cypress/downloads/
-
-# Docker
-docker-compose.override.yml
