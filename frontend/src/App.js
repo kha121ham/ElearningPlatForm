@@ -1,16 +1,23 @@
 import React from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import { Outlet } from 'react-router-dom';
 
 const App = () => {
   return (
-    <div className="min-h-screen flex flex-col">
-    {/* Header */}
-  <header className="bg-blue-600 text-white py-4">
-    <div className="container mx-auto px-4">
-      <h1 className="text-2xl font-bold">My Website</h1>
-    </div>
-  </header>
-  </div>
-  )
-}
+    <>
+      <Header />
+      <main className="py-3">
+        <div className="container mx-auto px-4">
+          <Outlet />
+        </div>
+      </main>
+      <Footer />
+      <ToastContainer />
+    </>
+  );
+};
 
-export default App
+export default App;

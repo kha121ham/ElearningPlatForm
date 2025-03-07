@@ -18,8 +18,7 @@ const authUser = asyncHandler(async (req, res) => {
         });
         
     }  else {
-        res.status(401);
-        throw new Error('Invalid email or password');
+        res.status(401).json({ message: 'Invalid email or password' });
     }
 });
 
@@ -27,7 +26,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @route   Post api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     const userExist = await User.findOne({ email });
 
@@ -39,7 +38,8 @@ const registerUser = asyncHandler(async (req, res) => {
     const user = await User.create({
         name,
         email,
-        password
+        password,
+        role
     });
 
     if(user) {
@@ -50,6 +50,7 @@ const registerUser = asyncHandler(async (req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
+            role: role,
             isAdmin: user.isAdmin
         });
     } else {
