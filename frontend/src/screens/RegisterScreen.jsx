@@ -29,9 +29,10 @@ const RegisterScreen = () => {
     }
 
     try {
-      const res = await register({ name, email, password, role }).unwrap(); // إضافة role إلى الطلب
+      const res = await register({ name, email, password, role }).unwrap(); 
       dispatch(setCredential({ ...res }));
       navigate('/');
+      toast.success('Register successful!')
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
@@ -63,6 +64,7 @@ const RegisterScreen = () => {
                 type="text"
                 id="name"
                 placeholder="Enter your name"
+                required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -78,6 +80,7 @@ const RegisterScreen = () => {
                 type="email"
                 id="email"
                 placeholder="Enter your email"
+                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -93,6 +96,7 @@ const RegisterScreen = () => {
                 type="password"
                 id="password"
                 placeholder="Enter your password"
+                required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -108,6 +112,7 @@ const RegisterScreen = () => {
                 type="password"
                 id="confirmPassword"
                 placeholder="Confirm your password"
+                required
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"

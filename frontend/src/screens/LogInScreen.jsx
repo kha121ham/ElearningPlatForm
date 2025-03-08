@@ -37,12 +37,11 @@ const LogInScreen = () => {
       const res = await login({ email, password }).unwrap();
       dispatch(setCredential({ ...res }));
       navigate(redirect);
+      toast.success('Login successful!'); // Show success message
     } catch (err) {
-      if (err.data?.message === 'Invalid email or password') {
-        toast.error('Invalid email or password');
-      } else {
-        toast.error('An error occurred. Please try again.');
-      }
+      // Handle errors
+      console.log(err); // Log the error for debugging
+      toast.error(err?.data?.message || err?.error || 'Login failed. Please try again.');
     }
   };
 
@@ -62,6 +61,7 @@ const LogInScreen = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
               />
             </div>
 
@@ -74,6 +74,7 @@ const LogInScreen = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
               />
             </div>
 
