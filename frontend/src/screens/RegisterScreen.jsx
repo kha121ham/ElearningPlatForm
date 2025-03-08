@@ -41,6 +41,10 @@ const RegisterScreen = () => {
     if (userInfo) {
       navigate('/');
     }
+    window.scrollTo({
+      top: 470, // Scroll to the bottom of the page
+      behavior: 'smooth', // Smooth scrolling animation
+    });
   }, [userInfo, navigate]);
 
   return (
