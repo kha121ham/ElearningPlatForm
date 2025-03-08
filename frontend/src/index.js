@@ -16,6 +16,10 @@ import {
 import HomeScreen from './screens/HomeScreen';
 import LogInScreen from './screens/LogInScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import CoursesScreen from './screens/CoursesScreen';
+import CourseScreen from './screens/CourseScreen';
+import InstractorRoute from './components/InstractorRoute';
+import AddCourseScreen from './screens/Instractor/AddCourseScreen';
 
 
 const router = createBrowserRouter(
@@ -24,6 +28,12 @@ const router = createBrowserRouter(
       <Route index={true} path='/' element={<HomeScreen />} />
       <Route path='/login' element={<LogInScreen />} />
       <Route path='/register' element={<RegisterScreen />} />
+      <Route path='/courses' element={<CoursesScreen />} />
+      <Route path='/courses/:id' element={<CourseScreen />} />
+
+      <Route path='' element={<InstractorRoute />}>
+      <Route path='/add-course' element={<AddCourseScreen />} />
+      </Route>
     </Route>
   )
 );

@@ -125,7 +125,7 @@ const Header = () => {
       <main className='container mx-auto px-6 py-12 max-w-screen-xl'>
         <div className='flex space-x-6 justify-center'>
           <Link
-            to='/home'
+            to='/'
             className='text-gray-700 hover:text-gray-900 text-lg'
           >
             Home
