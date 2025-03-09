@@ -32,7 +32,7 @@ const HomeScreen = () => {
                 key={course._id}
                 className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 w-72" // Slightly smaller card width
               >
-                <Link to={`/course/${course._id}`}>
+                <Link to={`/courses/${course._id}`}>
                   {/* Course Image */}
                   <img
                     src={course.image}
