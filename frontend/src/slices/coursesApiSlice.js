@@ -34,7 +34,20 @@ export const coursesApiSlice = apiSlice.injectEndpoints({
         body: data
       }),
     }),
+    createReview: builder.mutation({
+      query: (data) => ({
+        url: `${COURSES_URL}/${data.courseId}/reviews`,
+        method: 'POST',
+        body: data
+      }),
+    }),
+    getTopCourses: builder.query({
+      query: ()=> ({
+        url: `${COURSES_URL}/top`
+      }),
+      keepUnusedDataFor: 5,
+    }),
   }),
 });
 
-export const { useGetCoursesQuery, useCreateCourseMutation, useGetCourseDetailsQuery, useUploadCourseImageMutation } = coursesApiSlice;
+export const { useGetCoursesQuery, useCreateCourseMutation, useGetCourseDetailsQuery, useUploadCourseImageMutation, useGetTopCoursesQuery } = coursesApiSlice;

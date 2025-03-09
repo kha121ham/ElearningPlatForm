@@ -53,7 +53,7 @@ const getCourses = asyncHandler(async (req, res) => {
 // @route   Get api/courses/:id
 // @access  Public
 const getCourseById = asyncHandler(async (req, res) => {
-  const course = await Course.findById(req.params.id);
+  const course = await Course.findById(req.params.id).populate('instructor', 'name');
 
   if (course) {
     return res.json(course);
@@ -96,4 +96,57 @@ const createCourse = asyncHandler(async (req, res) => {
   res.status(201).json(createdCourse);
 });
 
-export { createCourse, getCourseById, getCourses };
+// @desc    Create a new review
+// @route   POST api/courses/:id/reviews
+// @access  Private
+const createCourseReview = asyncHandler(async(req,res)=>{
+  const { rating, comment } = req.body;
+
+  const course = await Course.findById(req.params.id);
+
+  if (course) {
+    //check if course reviewd
+    const alreadyReviewed = course.reviews.find(
+      (review) => review.user.toString() === req.user._id.toString()
+    );
+
+    if (alreadyReviewed) {
+      res.status(400);
+      throw new Error('Product already reviewed');
+    }
+
+    const review = {
+      name: req.user.name,
+      rating: Number(rating),
+      comment,
+      user: req.user._id
+    };
+
+    course.reviews.push(review);
+
+    course.numReviews = course.reviews.length;
+
+    course.rating = 
+    course.reviews.reduce((acc,review) => acc + review.rating , 0) / course.reviews.length;
+
+    await course.save();
+
+    res.status(201).json({ message: 'Review added' });
+  } else {
+    res.status(404);
+    throw new Error('resource not found');
+  }
+});
+
+
+// @desc    Get top rated courses
+// @route   Get api/courses/top
+// @access  Public
+const getTopCourses = asyncHandler(async(req,res)=>{
+  const products = await Course.find({}).sort({ rating: -1 }).limit(4);
+
+  res.status(200).json(products);
+});
+
+
+export { createCourse, getCourseById, getCourses, createCourseReview, getTopCourses };
