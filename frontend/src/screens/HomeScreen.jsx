@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const HomeScreen = () => {
   useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to the top of the page on load
+    window.scrollTo(0, 0); 
   }, []);
 
   const { data: courses, isLoading, error } = useGetTopCoursesQuery();

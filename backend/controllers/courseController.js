@@ -1,5 +1,6 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Course from "../models/courseModel.js";
+import Content from '../models/contentModel.js';
 
 // @desc    Fetch All courses
 // @route   Get api/courses
@@ -149,4 +150,32 @@ const getTopCourses = asyncHandler(async(req,res)=>{
 });
 
 
-export { createCourse, getCourseById, getCourses, createCourseReview, getTopCourses };
+
+
+// @desc    Enroll student to course
+// @route   POST api/courses/:id/enroll
+// @access  Private
+const enrollStudentToCourse = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user._id;
+
+  const course = await Course.findById(id);
+
+  if (!course) {
+    return res.status(404).json({ message: 'Course not found' });
+  }
+
+  if (course.enrolledStudents.includes(userId)) {
+    return res.status(400).json({ message: 'Student is already enrolled' });
+  }
+
+  const updatedCourse = await Course.findByIdAndUpdate(
+    id,
+    { $addToSet: { enrolledStudents: userId } },
+    { new: true }
+  );
+
+  res.status(200).json({ message: 'Student enrolled successfully', course: updatedCourse });
+});
+
+export { createCourse, getCourseById, getCourses, createCourseReview, getTopCourses, enrollStudentToCourse };

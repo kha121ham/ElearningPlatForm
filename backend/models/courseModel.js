@@ -24,6 +24,7 @@ const reviewSchema = mongoose.Schema({
 }
 );
 
+
 const courseSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -55,6 +56,12 @@ const courseSchema = new mongoose.Schema({
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
+        }
+    ],
+    content: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Content',
         }
     ],
     reviews: [reviewSchema],
