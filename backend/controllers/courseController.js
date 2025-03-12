@@ -113,7 +113,15 @@ const createCourseReview = asyncHandler(async(req,res)=>{
 
     if (alreadyReviewed) {
       res.status(400);
-      throw new Error('Product already reviewed');
+      throw new Error('Course already reviewed');
+    }
+
+    const userEnrolledInCourse = course.enrolledStudents.find(
+      (student) => student.toString() === req.user._id.toString()
+    );
+    
+    if(!userEnrolledInCourse) {
+      return res.status(402).json({ message: 'You should buy course first' });
     }
 
     const review = {

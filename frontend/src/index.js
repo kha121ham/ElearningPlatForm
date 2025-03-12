@@ -19,7 +19,9 @@ import RegisterScreen from './screens/RegisterScreen';
 import CoursesScreen from './screens/CoursesScreen';
 import CourseScreen from './screens/CourseScreen';
 import InstractorRoute from './components/InstractorRoute';
+import PrivateRoute from './components/PrivateRoute';
 import AddCourseScreen from './screens/Instractor/AddCourseScreen';
+import CartScreen from './screens/CartScreen';
 
 
 const router = createBrowserRouter(
@@ -30,6 +32,10 @@ const router = createBrowserRouter(
       <Route path='/register' element={<RegisterScreen />} />
       <Route path='/courses' element={<CoursesScreen />} />
       <Route path='/courses/:id' element={<CourseScreen />} />
+
+      <Route path='' element={<PrivateRoute />}>
+      <Route path='/cart' element={<CartScreen />} />
+      </Route>
 
       <Route path='' element={<InstractorRoute />}>
       <Route path='/add-course' element={<AddCourseScreen />} />
