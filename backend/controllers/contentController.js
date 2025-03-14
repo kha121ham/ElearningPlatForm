@@ -41,7 +41,6 @@ const getCourseContent = asyncHandler(async (req, res) => {
 const addContent = asyncHandler(async (req, res) => {
   const { sectionName, title, description, videoUrl } = req.body;
   const courseId  = req.params.id;
-  console.log(courseId)
 
   try {
     if (!title || !videoUrl || !description || !sectionName) {
