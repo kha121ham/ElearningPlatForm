@@ -22,7 +22,9 @@ import InstractorRoute from './components/InstractorRoute';
 import PrivateRoute from './components/PrivateRoute';
 import AddCourseScreen from './screens/Instractor/AddCourseScreen';
 import CartScreen from './screens/CartScreen';
-
+import OrderScreen from './screens/OrderScreen';
+import VideoScreen from './screens/VideoScreen';
+import AddContentScreen from './screens/Instractor/AddContentScreen';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,9 +38,18 @@ const router = createBrowserRouter(
       <Route path='' element={<PrivateRoute />}>
       <Route path='/cart' element={<CartScreen />} />
       </Route>
+      <Route path='' element={<PrivateRoute />}>
+      <Route path='/order/:id' element={<OrderScreen />} />
+      </Route>
+
+      <Route path='' element={<PrivateRoute />}>
+      <Route path='/courses/:id/video/:videoId' element={<VideoScreen />} />
+      </Route>
+
 
       <Route path='' element={<InstractorRoute />}>
       <Route path='/add-course' element={<AddCourseScreen />} />
+      <Route path='courses/:courseId/add-content' element={<AddContentScreen />} />
       </Route>
     </Route>
   )

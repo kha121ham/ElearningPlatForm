@@ -1,4 +1,4 @@
-import { COURSES_URL, UPLAOD_URL } from '../constants';
+import { COURSES_URL, UPLAOD_URL, CONTENTS_URL } from '../constants';
 import { apiSlice } from './apiSlice';
 
 export const coursesApiSlice = apiSlice.injectEndpoints({
@@ -34,6 +34,26 @@ export const coursesApiSlice = apiSlice.injectEndpoints({
         body: data
       }),
     }),
+    getTopCourses: builder.query({
+      query: ()=> ({
+        url: `${COURSES_URL}/top`
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    enrollStudentToCourse: builder.mutation({
+      query: (courseId) => ({
+        url: `${COURSES_URL}/${courseId}/enroll`,
+        method: 'PUT',
+        body: {}
+      }),
+    }),
+    getCourseContents: builder.query({
+      query: (courseId) => ({
+        url: `${CONTENTS_URL}/${courseId}`,
+        method: 'GET'
+      }),
+      keepUnusedDataFor: 5,
+    }),
     createReview: builder.mutation({
       query: (data) => ({
         url: `${COURSES_URL}/${data.courseId}/reviews`,
@@ -41,13 +61,25 @@ export const coursesApiSlice = apiSlice.injectEndpoints({
         body: data
       }),
     }),
-    getTopCourses: builder.query({
-      query: ()=> ({
-        url: `${COURSES_URL}/top`
+    addContent: builder.mutation({
+      query: ({ courseId, data }) => ({
+        url: `${CONTENTS_URL}/${courseId}`,
+        method: 'POST',
+        body: data
       }),
-      keepUnusedDataFor: 5,
+      invalidatesTags: ["Course"],
     }),
   }),
 });
 
-export const { useGetCoursesQuery, useCreateCourseMutation, useGetCourseDetailsQuery, useUploadCourseImageMutation, useGetTopCoursesQuery } = coursesApiSlice;
+export const { 
+  useGetCoursesQuery,
+  useCreateCourseMutation,
+  useGetCourseDetailsQuery, 
+  useUploadCourseImageMutation, 
+  useGetTopCoursesQuery,
+  useEnrollStudentToCourseMutation,
+  useGetCourseContentsQuery,
+  useCreateReviewMutation,
+  useAddContentMutation
+} = coursesApiSlice;

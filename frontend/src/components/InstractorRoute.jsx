@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 const InstractorRoute = () => {
     const { userInfo } = useSelector((state)=>state.auth);
 
-    return userInfo && userInfo.role === 'instractor' ? <Outlet /> : <Navigate to='login' replace />
+    return userInfo && userInfo.role === 'instructor' ? <Outlet /> : <Navigate to='login' replace />
 }
 
 export default InstractorRoute

@@ -36,6 +36,7 @@ const CartScreen = () => {
       }).unwrap();
       dispatch(clearCartItems());
       navigate(`/order/${res._id}`);
+      console.log(res._id)
     } catch (err) {
       // Extract the error message from the error object
       const errorMessage = err?.data?.message || err.message || "An error occurred";

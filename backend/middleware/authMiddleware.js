@@ -36,8 +36,8 @@ const admin = (req,res,next) => {
 };
 
 //Instractor function 
-const instractor = (req,res,next) => {
-    if(req.user && req.user.role === 'instractor') {
+const instructor = (req,res,next) => {
+    if(req.user && req.user.role === 'instructor') {
         next();
     } else {
         res.status(401);
@@ -46,4 +46,4 @@ const instractor = (req,res,next) => {
 
 };
 
-export { protect, admin, instractor };
+export { protect, admin, instructor };

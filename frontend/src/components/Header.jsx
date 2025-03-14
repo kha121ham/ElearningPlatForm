@@ -7,7 +7,7 @@ import { resetCart } from '../slices/cartSlice';
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.auth);
-  const { cartItems } = useSelector((state)=>state.cart);
+  const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -45,16 +45,42 @@ const Header = () => {
       {/* Navigation Bar */}
       <nav className='bg-white shadow'>
         <div className='container mx-auto px-6 py-4 flex justify-between items-center max-w-screen-xl'>
+          {/* Logo */}
           <div className='text-3xl font-bold text-gray-800'>
             <Link to='/'>eLearning</Link>
           </div>
 
+          {/* Navigation Links - Centered */}
+          <div className='flex items-center space-x-6'>
+            <Link to='/' className='text-gray-700 hover:text-gray-900 text-lg'>
+              Home
+            </Link>
+            <Link
+              to='/courses'
+              className='text-gray-700 hover:text-gray-900 text-lg'
+            >
+              Courses
+            </Link>
+            <Link
+              to='/about'
+              className='text-gray-700 hover:text-gray-900 text-lg'
+            >
+              About
+            </Link>
+            <Link
+              to='/contact'
+              className='text-gray-700 hover:text-gray-900 text-lg'
+            >
+              Contact
+            </Link>
+          </div>
+
+          {/* Cart and User Section */}
           <div className='flex items-center space-x-6'>
             {/* Cart Icon */}
             <Link to='/cart' className='relative'>
-              {/* Cart Icon - Larger size */}
               <svg
-                className='w-8 h-8 text-gray-700 hover:text-gray-900' // Increased size to w-8 h-8
+                className='w-8 h-8 text-gray-700 hover:text-gray-900'
                 fill='none'
                 stroke='currentColor'
                 viewBox='0 0 24 24'
@@ -67,16 +93,14 @@ const Header = () => {
                   d='M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z'
                 ></path>
               </svg>
-              {/* Cart Item Count - Unchanged size */}
               <span className='absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-500 rounded-full'>
-                 {cartItems.length > 0 && cartItems.length}
+                {cartItems.length > 0 && cartItems.length}
               </span>
             </Link>
 
             {/* User Dropdown or Login Link */}
             {userInfo ? (
               <div className='relative' ref={dropdownRef}>
-                {/* Dropdown Button */}
                 <button
                   className='flex items-center focus:outline-none'
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -148,33 +172,6 @@ const Header = () => {
           </p>
         </div>
       </header>
-
-      {/* Main Content */}
-      <main className='container mx-auto px-6 py-12 max-w-screen-xl'>
-        <div className='flex space-x-6 justify-center'>
-          <Link to='/' className='text-gray-700 hover:text-gray-900 text-lg'>
-            Home
-          </Link>
-          <Link
-            to='/courses'
-            className='text-gray-700 hover:text-gray-900 text-lg'
-          >
-            Courses
-          </Link>
-          <Link
-            to='/about'
-            className='text-gray-700 hover:text-gray-900 text-lg'
-          >
-            About
-          </Link>
-          <Link to='/g' className='text-gray-700 hover:text-gray-900 text-lg'>
-            Gift Card
-          </Link>
-          <Link to='/c' className='text-gray-700 hover:text-gray-900 text-lg'>
-            Contact
-          </Link>
-        </div>
-      </main>
     </>
   );
 };

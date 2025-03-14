@@ -161,7 +161,7 @@ const getTopCourses = asyncHandler(async(req,res)=>{
 
 
 // @desc    Enroll student to course
-// @route   POST api/courses/:id/enroll
+// @route   PUT api/courses/:id/enroll
 // @access  Private
 const enrollStudentToCourse = asyncHandler(async (req, res) => {
   const { id } = req.params;
