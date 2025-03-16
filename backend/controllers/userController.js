@@ -97,6 +97,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin,
+            role: user.role,
         });
     } else {
         res.status(404);
@@ -113,6 +114,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     if(user) {
         user.name= req.body.name || user.name;
         user.email= req.body.email || user.email;
+        user.role= req.body.role || user.role;
         if(req.body.password) {
             user.password = req.body.password;
         }
@@ -123,7 +125,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
             _id: updatedUser._id,
             name: updatedUser.name,
             email: updatedUser.email,
-            isAdmin: updatedUser.isAdmin
+            isAdmin: updatedUser.isAdmin,
+            role: updatedUser.role,
         })
 
     }  else {
@@ -183,6 +186,7 @@ const updateUser = asyncHandler(async (req, res) => {
     if (user) {
         user.name = req.body.name || user.name;
         user.email = req.body.email || user.email;
+        user.role = req.body.role || user.role;
         user.isAdmin = Boolean(req.body.isAdmin);
 
         const updatedUser = await user.save();
@@ -192,6 +196,7 @@ const updateUser = asyncHandler(async (req, res) => {
             name: updatedUser.name,
             email: updatedUser.email,
             isAdmin: updatedUser.isAdmin,
+            role: updateUser.role,
         });
     } else {
         res.status(404);

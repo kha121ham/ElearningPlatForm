@@ -32,18 +32,13 @@ const CourseScreen = () => {
   const isInstructor =
     course &&
     (course.instructor?._id === userInfo?._id || course.instructor === userInfo?._id);
+    console.log(course)
 
   const canAccessContent = isEnrolled || isInstructor;
 
   const { data: content, isLoading: loadingContent } =
     useGetCourseContentsQuery(courseId);
 
-  // Debug logs
-  console.log("Course:", course);
-  console.log("User Info:", userInfo);
-  console.log("Is Instructor:", isInstructor);
-  console.log("Is Enrolled:", isEnrolled);
-  console.log("Can Access Content:", canAccessContent);
 
   // State for review form
   const [rating, setRating] = useState(0);
@@ -251,7 +246,7 @@ const CourseScreen = () => {
             )}
 
             {/* Add Review Form (Only for enrolled users who haven't reviewed yet) */}
-            {isEnrolled && !hasReviewed && !isInstructor && (
+            {isEnrolled && !hasReviewed &&  (
               <div className="mt-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">
                   Add a Review

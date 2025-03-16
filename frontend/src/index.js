@@ -20,11 +20,14 @@ import CoursesScreen from './screens/CoursesScreen';
 import CourseScreen from './screens/CourseScreen';
 import InstractorRoute from './components/InstractorRoute';
 import PrivateRoute from './components/PrivateRoute';
+import AdminRoute from './components/AdminRoute';
 import AddCourseScreen from './screens/Instractor/AddCourseScreen';
 import CartScreen from './screens/CartScreen';
 import OrderScreen from './screens/OrderScreen';
 import VideoScreen from './screens/VideoScreen';
 import AddContentScreen from './screens/Instractor/AddContentScreen';
+import ProfileScreen from './screens/ProfileScreen';
+import OrderListScreen from './screens/admin/OrderListScreen';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,14 +39,13 @@ const router = createBrowserRouter(
       <Route path='/courses/:id' element={<CourseScreen />} />
 
       <Route path='' element={<PrivateRoute />}>
-      <Route path='/cart' element={<CartScreen />} />
-      </Route>
-      <Route path='' element={<PrivateRoute />}>
       <Route path='/order/:id' element={<OrderScreen />} />
-      </Route>
-
-      <Route path='' element={<PrivateRoute />}>
+      <Route path='/cart' element={<CartScreen />} />
       <Route path='/courses/:id/video/:videoId' element={<VideoScreen />} />
+      <Route path='/profile' element={<ProfileScreen />} />
+      </Route>
+      <Route path='' element={<AdminRoute />}>
+        <Route path='/admin/orderlist' element={<OrderListScreen />} />
       </Route>
 
 

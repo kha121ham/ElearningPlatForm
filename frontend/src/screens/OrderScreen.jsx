@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   useGetOrderDetailsQuery,
@@ -75,7 +75,7 @@ const OrderScreen = () => {
           <h2 className='text-lg font-semibold'>Order Items</h2>
           <div className='mt-2 space-y-2'>
             {order.orderItems.map((item) => (
-              <div key={item.id} className='flex items-center mb-4'>
+              <div key={item._id} className='flex items-center mb-4'>
                 <img
                   src={item.image}
                   alt={item.name}
@@ -96,11 +96,11 @@ const OrderScreen = () => {
           <div className='mt-2'>
             <p className='flex justify-between text-gray-600'>
               <span>Tax:</span>
-              <span>{order.taxPrice}</span>
+              <span>{order.taxPrice}$</span>
             </p>
             <p className='flex justify-between text-gray-800 font-semibold'>
               <span>Total:</span>
-              <span>{order.totalPrice}</span>
+              <span>{order.totalPrice}$</span>
             </p>
           </div>
         </div>

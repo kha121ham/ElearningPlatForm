@@ -9,7 +9,7 @@ const getCourses = asyncHandler(async (req, res) => {
   const { page = 1, category, search } = req.query; // Get query parameters
 
   // Number of courses per page
-  const pageSize = 10;
+  const pageSize = process.env.PAGINATION_LIMIT;
 
   // Build the query object
   const query = {};
@@ -152,9 +152,9 @@ const createCourseReview = asyncHandler(async(req,res)=>{
 // @route   Get api/courses/top
 // @access  Public
 const getTopCourses = asyncHandler(async(req,res)=>{
-  const products = await Course.find({}).sort({ rating: -1 }).limit(4);
+  const courses = await Course.find({}).sort({ rating: -1 }).limit(4);
 
-  res.status(200).json(products);
+  res.status(200).json(courses);
 });
 
 
