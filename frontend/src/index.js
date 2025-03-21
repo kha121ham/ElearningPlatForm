@@ -28,6 +28,9 @@ import VideoScreen from './screens/VideoScreen';
 import AddContentScreen from './screens/Instractor/AddContentScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import OrderListScreen from './screens/admin/OrderListScreen';
+import CourseListScreen from './screens/admin/CourseListScreen';
+import UserListScreen from './screens/admin/UserListScreen';
+import EditUserScreen from './screens/admin/EditUserScreen';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -44,10 +47,13 @@ const router = createBrowserRouter(
       <Route path='/courses/:id/video/:videoId' element={<VideoScreen />} />
       <Route path='/profile' element={<ProfileScreen />} />
       </Route>
+
       <Route path='' element={<AdminRoute />}>
         <Route path='/admin/orderlist' element={<OrderListScreen />} />
+        <Route path='/admin/courselist' element={<CourseListScreen />} />
+        <Route path='/admin/userslist' element={<UserListScreen />} />
+        <Route path='/admin/edit-user/:id' element={<EditUserScreen />} />
       </Route>
-
 
       <Route path='' element={<InstractorRoute />}>
       <Route path='/add-course' element={<AddCourseScreen />} />

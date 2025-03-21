@@ -34,7 +34,7 @@ const CourseScreen = () => {
     (course.instructor?._id === userInfo?._id || course.instructor === userInfo?._id);
     console.log(course)
 
-  const canAccessContent = isEnrolled || isInstructor;
+  const canAccessContent = isEnrolled || isInstructor || (userInfo && userInfo.isAdmin);
 
   const { data: content, isLoading: loadingContent } =
     useGetCourseContentsQuery(courseId);

@@ -67,12 +67,6 @@ const Header = () => {
             >
               About
             </Link>
-            <Link
-              to='/contact'
-              className='text-gray-700 hover:text-gray-900 text-lg'
-            >
-              Contact
-            </Link>
           </div>
 
           {/* Cart and User Section */}
@@ -140,6 +134,35 @@ const Header = () => {
                     >
                       Profile
                     </Link>
+                    {userInfo && userInfo.isAdmin && (
+                      <Link
+                      to='/admin/orderlist'
+                      className='block px-4 py-2 text-gray-700 hover:bg-gray-100'
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      Order List
+                    </Link>
+                    )}
+
+                    {userInfo && userInfo.isAdmin && (
+                      <Link
+                      to='/admin/courselist'
+                      className='block px-4 py-2 text-gray-700 hover:bg-gray-100'
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      Course List
+                    </Link>
+                    )}
+                    {userInfo && userInfo.isAdmin && (
+                      <Link
+                      to='/admin/userslist'
+                      className='block px-4 py-2 text-gray-700 hover:bg-gray-100'
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      Users List
+                    </Link>
+                    )}
+
                     <button
                       onClick={logoutHandler}
                       className='block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100'
