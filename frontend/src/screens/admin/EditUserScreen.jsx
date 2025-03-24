@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import {
   useUpdateUserMutation,
   useGetUserDetailsQuery,
@@ -62,6 +61,13 @@ const EditUserScreen = () => {
           {error.data?.message || "Failed to load user"}
         </Message>
       ) : (
+        <>
+        <button
+            onClick={()=> navigate(-1)}
+            className="mb-4 text-blue-600 hover:text-blue-800 transition duration-300"
+          >
+            &larr; Back
+          </button>
         <form onSubmit={submitHandler} className='max-w-lg mx-auto'>
           {/* Name Field */}
           <div className='mb-4'>
@@ -148,6 +154,7 @@ const EditUserScreen = () => {
             </button>
           </div>
         </form>
+        </>
       )}
     </div>
   );

@@ -1,10 +1,9 @@
 import React from 'react'
-import { useGetUsersQuery, useDeleteUserMutation, useUpdateUserMutation } from '../../slices/usersApiSlice'
+import { useGetUsersQuery, useDeleteUserMutation } from '../../slices/usersApiSlice'
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 const UserListScreen = () => {
 
@@ -12,6 +11,35 @@ const UserListScreen = () => {
     const [deleteUser] = useDeleteUserMutation();
 
     const { userInfo } = useSelector((state) => state.auth);
+
+    const handleDeleteCourse = async (courseId) => {
+      toast.info(
+        <div>
+          <p>Are you sure to delete this course...?</p>
+          <div className='flex gap-2 mt-2'>
+            <button
+              className='bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600'
+              onClick={() => {
+                deleteHandler(courseId);
+                toast.dismiss();
+              }}
+            >
+              Yes
+            </button>
+            <button
+              className='bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600'
+              onClick={() => toast.dismiss()}
+            >
+              No
+            </button>
+          </div>
+        </div>,
+        {
+          autoClose: false,
+          closeButton: false,
+        }
+      );
+    };
 
 
     const deleteHandler = async(userId) => {
@@ -92,7 +120,7 @@ const UserListScreen = () => {
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
                     {userInfo._id !== user._id && !user.isAdmin && (
                       <button
-                        onClick={() => deleteHandler(user._id)}
+                        onClick={() => handleDeleteCourse(user._id)}
                         className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition duration-200"
                       >
                         Delete

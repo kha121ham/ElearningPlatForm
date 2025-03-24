@@ -31,6 +31,7 @@ import OrderListScreen from './screens/admin/OrderListScreen';
 import CourseListScreen from './screens/admin/CourseListScreen';
 import UserListScreen from './screens/admin/UserListScreen';
 import EditUserScreen from './screens/admin/EditUserScreen';
+import MyCoursesScreen from './screens/Instractor/MyCoursesScreen';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -58,6 +59,7 @@ const router = createBrowserRouter(
       <Route path='' element={<InstractorRoute />}>
       <Route path='/add-course' element={<AddCourseScreen />} />
       <Route path='courses/:courseId/add-content' element={<AddContentScreen />} />
+      <Route path='/mycourses' element={<MyCoursesScreen />} />
       </Route>
     </Route>
   )

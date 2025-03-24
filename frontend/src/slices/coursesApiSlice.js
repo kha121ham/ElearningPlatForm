@@ -12,6 +12,19 @@ export const coursesApiSlice = apiSlice.injectEndpoints({
       providesTags: ['Courses'],
       keepUnusedDataFor: 5,
     }),
+    getCoursesToAdmin: builder.query({
+      query: () => ({
+        url: `${COURSES_URL}/admin`,
+        method: 'GET',
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    deleteCourse: builder.mutation({
+      query: (courseId) => ({
+        url: `${COURSES_URL}/${courseId}/admin`,
+        method: 'DELETE'
+      }),
+    }),
     getCourseDetails: builder.query({
       query: (courseId) => ({
         url: `${COURSES_URL}/${courseId}`,
@@ -69,6 +82,18 @@ export const coursesApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Course"],
     }),
+    getInstructorCourses: builder.query({
+      query: () => ({
+        url: `${COURSES_URL}/instructor`,
+        method: 'GET'
+      }),
+    }),
+    deleteInstructorCourse: builder.mutation({
+      query: (courseId) => ({
+        url: `${COURSES_URL}/${courseId}/instructor`,
+        method: 'DELETE'
+      }),
+    }),
   }),
 });
 
@@ -81,5 +106,9 @@ export const {
   useEnrollStudentToCourseMutation,
   useGetCourseContentsQuery,
   useCreateReviewMutation,
-  useAddContentMutation
+  useAddContentMutation,
+  useGetCoursesToAdminQuery,
+  useDeleteCourseMutation,
+  useGetInstructorCoursesQuery,
+  useDeleteInstructorCourseMutation,
 } = coursesApiSlice;

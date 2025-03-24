@@ -50,6 +50,55 @@ const getCourses = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Fetch All courses for admin
+// @route   Get api/courses/admin
+// @access  Private
+const getCoursesToAdmin = asyncHandler(async(req,res)=>{
+  const courses = await Course.find({}).populate('instructor', 'name');
+  return res.status(200).json(courses);
+})
+
+// @desc    Delete any courses for admin
+// @route   DELETE api/courses/:id/admin
+// @access  Private/Admin
+const deleteCoursesByAdmin = asyncHandler(async (req, res) => {
+  const course = await Course.findById(req.params.id);
+
+  if (!course) {
+    return res.status(404).json({ message: 'Course not found' });
+  }
+
+  await Course.deleteOne({ _id: course._id });
+  res.status(200).json({ message: 'Course deleted successfully' });
+});
+
+// @desc    Fetch intsructor courses 
+// @route   Get api/courses/intructor
+// @access  Private/Intructor
+const getInstructorCourses = asyncHandler(async(req,res)=>{
+  const courses = await Course.find({ instructor: req.user._id });
+
+  return res.status(200).json(courses);
+});
+
+// @desc    Delete instructor courses 
+// @route   DELETE api/courses/:id/instructor
+// @access  Private/Instructor  
+const deleteInstructorCourse = asyncHandler(async (req, res) => {
+  const course = await Course.findById(req.params.id);
+
+  if (!course) {
+    return res.status(404).json({ message: 'Course not found' });
+  }
+
+  if (course.instructor.toString() !== req.user._id.toString()) {
+    return res.status(401).json({ message: 'Not your course' });
+  }
+
+  await Course.deleteOne({ _id: course._id });
+  res.status(200).json({ message: 'Course deleted successfully' });
+});
+
 // @desc    Fetch a Course
 // @route   Get api/courses/:id
 // @access  Public
@@ -186,4 +235,15 @@ const enrollStudentToCourse = asyncHandler(async (req, res) => {
   res.status(200).json({ message: 'Student enrolled successfully', course: updatedCourse });
 });
 
-export { createCourse, getCourseById, getCourses, createCourseReview, getTopCourses, enrollStudentToCourse };
+export { 
+  createCourse, 
+  getCourseById, 
+  getCourses, 
+  createCourseReview, 
+  getTopCourses, 
+  enrollStudentToCourse, 
+  getCoursesToAdmin,
+  deleteCoursesByAdmin,
+  getInstructorCourses,
+  deleteInstructorCourse
+};

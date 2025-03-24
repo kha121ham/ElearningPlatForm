@@ -9,10 +9,13 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { toast } from "react-toastify";
 import NotUserOrderPage from "../components/NotUserOrderPage";
+import { useNavigate } from "react-router-dom";
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
   const { userInfo } = useSelector((state) => state.auth);
+
+  const navigate = useNavigate();
 
   // Fetch order details
   const {
@@ -68,6 +71,12 @@ const OrderScreen = () => {
 
   return (
     <div className="p-6 bg-white shadow-md rounded-lg max-w-2xl mx-auto">
+          <button
+            onClick={()=> navigate(-1)}
+            className="mb-4 text-blue-600 hover:text-blue-800 transition duration-300"
+          >
+            &larr; Back
+          </button>
       <h1 className="text-2xl font-bold mb-4">Order Details</h1>
       <div className="space-y-4">
         {/* Order Information */}

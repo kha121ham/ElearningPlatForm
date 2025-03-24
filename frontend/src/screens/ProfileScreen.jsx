@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useProfileMutation } from "../slices/usersApiSlice";
 import { useGetMyOrdersQuery } from "../slices/ordersApiSlices";
+import { useGetCoursesToAdminQuery } from "../slices/coursesApiSlice";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { toast } from "react-toastify";
@@ -27,14 +28,13 @@ const ProfileScreen = () => {
       setRole(userInfo.role);
     }
   }, [userInfo]);
-
+  
   const [updateProfile, { isLoading: updatingProfile }] = useProfileMutation();
   const {
     data: orders,
     isLoading: loadingOrders,
     error: ordersError,
   } = useGetMyOrdersQuery();
-  console.log(orders);
 
   const submitHandler = async (e) => {
     e.preventDefault();
