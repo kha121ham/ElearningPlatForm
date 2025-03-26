@@ -7,7 +7,14 @@ const VideoScreen = () => {
   const { id: courseId, videoId } = useParams();
   const { data: content, isLoading } = useGetCourseContentsQuery(courseId);
 
-  const video = content?.find((item) => item._id === videoId);
+  console.log(content);
+  // Find the section containing the video
+  const section = content?.find((section) =>
+    section.videos.some((video) => video._id === videoId)
+  );
+
+  // Find the specific video within the section
+  const video = section?.videos.find((video) => video._id === videoId);
 
   return (
     <div className='max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md'>
@@ -23,20 +30,25 @@ const VideoScreen = () => {
         <Loader />
       ) : video ? (
         <div>
+          {/* Section Name */}
+          <h2 className='text-xl font-semibold text-gray-800 mb-2'>
+            Section: {section?.sectionName}
+          </h2>
+
           {/* Video Title */}
           <h1 className='text-2xl font-bold text-gray-900 mb-4'>
             {video.title}
           </h1>
 
-          {/* Video Embed */}
+          {/* Video Player */}
           <div className='aspect-video rounded-lg overflow-hidden shadow-md'>
-            <iframe
+            <video
               src={video.videoUrl}
-              title={video.title}
+              controls
               className='w-full h-full'
-              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-              allowFullScreen
-            ></iframe>
+            >
+              Your browser does not support the video tag.
+            </video>
           </div>
 
           {/* Video Description */}

@@ -13,40 +13,47 @@ const AddContentScreen = () => {
   // State for video form
   const [videoTitle, setVideoTitle] = useState("");
   const [videoDescription, setVideoDescription] = useState("");
-  const [videoUrl, setVideoUrl] = useState("");
+  const [videoFile, setVideoFile] = useState(null);
 
   const [addContent, { isLoading }] = useAddContentMutation();
-
-  // Validate URL format
-  const isValidUrl = (url) => {
-    try {
-      new URL(url);
-      return true;
-    } catch (error) {
-      return false;
-    }
-  };
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validate inputs
-    if (!sectionName || !videoTitle || !videoDescription || !videoUrl) {
+    if (!sectionName || !videoTitle || !videoDescription || !videoFile) {
       toast.error("Please fill in all fields");
       return;
     }
 
-    // Prepare data to submit
-    const contentData = {
-      sectionName,
-      title: videoTitle,
-      description: videoDescription,
-      videoUrl,
-    };
-
     try {
-      // Call the mutation with the content data
+      // Upload video file to the backend
+      const formData = new FormData();
+      formData.append("video", videoFile);
+
+      const uploadResponse = await fetch("/api/videos/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!uploadResponse.ok) {
+        throw new Error("Failed to upload video");
+      }
+
+      const uploadData = await uploadResponse.json();
+      console.log(uploadData.message);
+      const videoUrl = uploadData.videoPath;
+
+      // Prepare content data
+      const contentData = {
+        sectionName,
+        title: videoTitle,
+        description: videoDescription,
+        videoUrl,
+      };
+      
+      // Submit content data
       await addContent({ courseId, data: contentData }).unwrap();
       toast.success("Content added successfully");
 
@@ -54,13 +61,14 @@ const AddContentScreen = () => {
       setSectionName("");
       setVideoTitle("");
       setVideoDescription("");
-      setVideoUrl("");
+      setVideoFile(null);
       navigate(-1);
     } catch (err) {
-      toast.error(err?.data?.message || "Failed to add content");
+      toast.error(err?.message || "Failed to add content");
       console.error(err);
     }
   };
+
   return (
     <div className='max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md'>
       {/* Page Title */}
@@ -125,16 +133,15 @@ const AddContentScreen = () => {
             ></textarea>
           </div>
 
-          {/* Video URL Input */}
+          {/* Video File Input */}
           <div className='mb-4'>
             <label className='block text-gray-700 font-semibold mb-2'>
-              Video URL
+              Upload Video
             </label>
             <input
-              type='text'
-              placeholder='Enter video URL'
-              value={videoUrl}
-              onChange={(e) => setVideoUrl(e.target.value)}
+              type='file'
+              accept='video/*'
+              onChange={(e) => setVideoFile(e.target.files[0])}
               className='w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
               required
             />

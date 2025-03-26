@@ -2,6 +2,7 @@ import path from 'path';
 import express from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
+import cors from 'cors';
 const port = process.env.PORT || 5000;
 import connectDB from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
@@ -11,10 +12,12 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import contentRoutes from './routes/contentRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
+import videoRoutes from './routes/videoRoutes.js';
 const app = express();
 
 
 //Body parser middleware
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -29,6 +32,7 @@ connectDB();
 //Set __dirname to current dir
 const __dirname = path.resolve();
 app.use('/uploads',express.static(path.join(__dirname, '/uploads')));
+app.use('/videos',express.static(path.join(__dirname, '/videos')));
 
 if (process.env.NODE_ENV === 'production') {
     //set static folder
@@ -51,6 +55,7 @@ app.use('/api/courses', courseRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/content', contentRoutes);
 app.use('/api/orders', orderRoutes);
+app.use("/api/videos", videoRoutes);
 
 //error middleware
 app.use(notFound);
