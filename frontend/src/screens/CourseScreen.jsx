@@ -32,28 +32,20 @@ const CourseScreen = () => {
   const isInstructor =
     course &&
     (course.instructor?._id === userInfo?._id || course.instructor === userInfo?._id);
-    console.log(course)
 
   const canAccessContent = isEnrolled || isInstructor || (userInfo && userInfo.isAdmin);
 
   const { data: content, isLoading: loadingContent } =
     useGetCourseContentsQuery(courseId);
 
-
-  // State for review form
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-
-  // Create review mutation
+  const [expandedSections, setExpandedSections] = useState({});
   const [createReview, { isLoading: loadingReview }] = useCreateReviewMutation();
 
-  // Check if the user has already reviewed the course
   const hasReviewed = course?.reviews?.some(
     (review) => review.user.toString() === userInfo?._id.toString()
   );
-
-  // State to manage visibility of videos for each section
-  const [expandedSections, setExpandedSections] = useState({});
 
   const handleBuyNow = () => {
     dispatch(addToCart({ ...course }));
@@ -64,7 +56,6 @@ const CourseScreen = () => {
     navigate(-1);
   };
 
-  // Handle review submission
   const submitReview = async (e) => {
     e.preventDefault();
 
@@ -83,7 +74,6 @@ const CourseScreen = () => {
     }
   };
 
-  // Toggle visibility of videos for a section
   const toggleSection = (sectionId) => {
     setExpandedSections((prev) => ({
       ...prev,
@@ -100,7 +90,7 @@ const CourseScreen = () => {
           Error loading course details.
         </div>
       ) : (
-        <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+        <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg animate-fade-in">
           {/* Back Button */}
           <button
             onClick={handleGoBack}
@@ -114,12 +104,12 @@ const CourseScreen = () => {
             <img
               src={course.image}
               alt={course.title}
-              className="w-full h-64 object-cover rounded-lg"
+              className="w-full h-64 object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
             />
           </div>
 
           {/* Course Title */}
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
             {course.title}
           </h1>
 
@@ -136,22 +126,20 @@ const CourseScreen = () => {
 
           {/* Conditional Rendering Based on Enrollment Status */}
           {canAccessContent ? (
-            <div className="bg-green-50 p-6 rounded-lg mb-6">
-              <h2 className="text-xl font-semibold text-green-800 mb-4">
-                Course Content...
+            <div className="bg-green-50 p-6 rounded-lg mb-6 shadow-md">
+              <h2 className="text-2xl font-semibold text-green-800 mb-4">
+                Course Content
               </h2>
               <div className="space-y-4">
                 {loadingContent ? (
                   <Loader />
                 ) : (
                   <>
-                    {/* Course Content */}
                     {content &&
                       content.map((section, sectionIndex) => (
                         <div key={sectionIndex} className="mb-6">
-                          {/* Section Title with Toggle Button */}
                           <div
-                            className="flex items-center justify-between cursor-pointer"
+                            className="flex items-center justify-between cursor-pointer bg-gray-100 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
                             onClick={() => toggleSection(section._id)}
                           >
                             <h3 className="text-lg font-semibold text-gray-900">
@@ -166,7 +154,6 @@ const CourseScreen = () => {
                             </span>
                           </div>
 
-                          {/* Videos in the Section (Conditionally Rendered) */}
                           {expandedSections[section._id] && (
                             <ul className="mt-2 space-y-2">
                               {section.videos.map((video, videoIndex) => (
@@ -175,12 +162,9 @@ const CourseScreen = () => {
                                   key={videoIndex}
                                   className="block p-3 border rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
                                 >
-                                  {/* Video Title */}
                                   <h4 className="text-lg font-semibold text-gray-900">
                                     {video.title}
                                   </h4>
-
-                                  {/* Video Description */}
                                   <p className="text-sm text-gray-600">
                                     {video.description}
                                   </p>
@@ -191,7 +175,6 @@ const CourseScreen = () => {
                         </div>
                       ))}
 
-                                          {/* Add Content Button for Instructors */}
                     {isInstructor && (
                       <Link
                         to={`/courses/${courseId}/add-content`}
@@ -221,13 +204,13 @@ const CourseScreen = () => {
 
           {/* Reviews Section */}
           <div className="mt-8">
-            <h3 className="text-xl font-semibold text-gray-900 mb-4">
+            <h3 className="text-2xl font-semibold text-gray-900 mb-4">
               Reviews
             </h3>
             {course.reviews && course.reviews.length > 0 ? (
               <div className="space-y-4">
                 {course.reviews.map((review, index) => (
-                  <div key={index} className="border p-4 rounded-lg">
+                  <div key={index} className="border p-4 rounded-lg shadow-sm">
                     <div className="flex items-center mb-2">
                       <span className="font-semibold text-gray-700">
                         {review.name}
@@ -245,14 +228,12 @@ const CourseScreen = () => {
               <p className="text-gray-600">No reviews</p>
             )}
 
-            {/* Add Review Form (Only for enrolled users who haven't reviewed yet) */}
-            {isEnrolled && !hasReviewed &&  (
+            {isEnrolled && !hasReviewed && (
               <div className="mt-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">
                   Add a Review
                 </h3>
                 <form onSubmit={submitReview}>
-                  {/* Rating Input */}
                   <div className="mb-4">
                     <label className="block text-gray-700 font-semibold mb-2">
                       Rating
@@ -272,7 +253,6 @@ const CourseScreen = () => {
                     </select>
                   </div>
 
-                  {/* Comment Input */}
                   <div className="mb-4">
                     <label className="block text-gray-700 font-semibold mb-2">
                       Comment
@@ -286,7 +266,6 @@ const CourseScreen = () => {
                     ></textarea>
                   </div>
 
-                  {/* Submit Button */}
                   <button
                     type="submit"
                     disabled={loadingReview}

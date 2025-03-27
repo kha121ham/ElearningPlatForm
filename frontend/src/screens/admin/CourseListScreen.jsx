@@ -3,7 +3,7 @@ import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const CourseListScreen = () => {
   const { data: courses, isLoading, error, refetch } = useGetCoursesToAdminQuery();
@@ -12,10 +12,10 @@ const CourseListScreen = () => {
   const handleDeleteCourse = async (courseId) => {
     toast.info(
       <div>
-        <p>Are you sure to delete this course...?</p>
+        <p>Are you sure you want to delete this course?</p>
         <div className="flex gap-2 mt-2">
           <button
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300"
             onClick={() => {
               confirmDelete(courseId);
               toast.dismiss();
@@ -24,7 +24,7 @@ const CourseListScreen = () => {
             Yes
           </button>
           <button
-            className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+            className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300"
             onClick={() => toast.dismiss()}
           >
             No
@@ -33,7 +33,7 @@ const CourseListScreen = () => {
       </div>,
       {
         autoClose: false,
-        closeButton: false, 
+        closeButton: false,
       }
     );
   };
@@ -44,21 +44,25 @@ const CourseListScreen = () => {
       refetch();
       toast.success("Course deleted successfully");
     } catch (err) {
-      toast.error("Faild to delete course");
+      toast.error("Failed to delete course");
     }
   };
 
-  return isLoading ? <Loader /> : error ? (
-          <Message variant="danger">{error?.data?.message || 'Failed to load courses'}</Message>
-        ) : courses.length === 0 ? (
-          <Message variant="info">No courses found.</Message>
-        ) : (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold text-center mb-8">Admin Course Management</h1>
+  return isLoading ? (
+    <Loader />
+  ) : error ? (
+    <Message variant="danger">{error?.data?.message || "Failed to load courses"}</Message>
+  ) : courses.length === 0 ? (
+    <Message variant="info">No courses found.</Message>
+  ) : (
+    <div className="container mx-auto p-6 bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen">
+      <h1 className="text-4xl font-bold text-center mb-8 text-gray-800 animate-fade-in">
+        Admin Course Management
+      </h1>
 
       {/* Course Table */}
-      <div className="bg-white shadow-md rounded-lg overflow-hidden">
-        <table className="min-w-full">
+      <div className="bg-white shadow-lg rounded-lg overflow-hidden animate-fade-in">
+        <table className="min-w-full animate-fade-in">
           <thead className="bg-gray-200">
             <tr>
               <th className="py-3 px-4 text-left">ID</th>
@@ -72,18 +76,26 @@ const CourseListScreen = () => {
           </thead>
           <tbody>
             {courses?.map((course) => (
-              <tr key={course._id} className="border-b">
+              <tr
+                key={course._id}
+                className="border-b hover:bg-gray-50 transition duration-300"
+              >
                 <td className="py-3 px-4">{course._id}</td>
-                <Link to={`/courses/${course._id}`}>
-                <td className="py-3 px-4">{course.title}</td>
-                </Link>
+                <td className="py-3 px-4">
+                  <Link
+                    to={`/courses/${course._id}`}
+                    className="text-blue-500 hover:text-blue-700 transition duration-300"
+                  >
+                    {course.title}
+                  </Link>
+                </td>
                 <td className="py-3 px-4">{course.instructor.name}</td>
                 <td className="py-3 px-4">{course.category}</td>
                 <td className="py-3 px-4">{course.rating}</td>
                 <td className="py-3 px-4">{course.enrolledStudents.length}</td>
                 <td className="py-3 px-4">
                   <button
-                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300"
                     onClick={() => handleDeleteCourse(course._id)}
                   >
                     Delete

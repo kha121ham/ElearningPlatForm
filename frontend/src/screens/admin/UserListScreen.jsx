@@ -1,127 +1,136 @@
-import React from 'react'
-import { useGetUsersQuery, useDeleteUserMutation } from '../../slices/usersApiSlice'
+import React from "react";
+import {
+  useGetUsersQuery,
+  useDeleteUserMutation,
+} from "../../slices/usersApiSlice";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+
 const UserListScreen = () => {
+  const { data: users, isLoading, error, refetch } = useGetUsersQuery();
+  const [deleteUser] = useDeleteUserMutation();
 
-    const { data: users, isLoading, error, refetch } = useGetUsersQuery();
-    const [deleteUser] = useDeleteUserMutation();
+  const { userInfo } = useSelector((state) => state.auth);
 
-    const { userInfo } = useSelector((state) => state.auth);
+  const handleDeleteUser = async (userId) => {
+    toast.info(
+      <div>
+        <p>Are you sure you want to delete this user?</p>
+        <div className='flex gap-4 mt-2'>
+          <button
+            className='bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300'
+            onClick={() => {
+              deleteHandler(userId);
+              toast.dismiss();
+            }}
+          >
+            Yes
+          </button>
+          <button
+            className='bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300'
+            onClick={() => toast.dismiss()}
+          >
+            No
+          </button>
+        </div>
+      </div>,
+      {
+        autoClose: false,
+        closeButton: false,
+      }
+    );
+  };
 
-    const handleDeleteCourse = async (courseId) => {
-      toast.info(
-        <div>
-          <p>Are you sure to delete this course...?</p>
-          <div className='flex gap-2 mt-2'>
-            <button
-              className='bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600'
-              onClick={() => {
-                deleteHandler(courseId);
-                toast.dismiss();
-              }}
-            >
-              Yes
-            </button>
-            <button
-              className='bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600'
-              onClick={() => toast.dismiss()}
-            >
-              No
-            </button>
-          </div>
-        </div>,
-        {
-          autoClose: false,
-          closeButton: false,
-        }
-      );
-    };
-
-
-    const deleteHandler = async(userId) => {
-        try {
-            await deleteUser(userId).unwrap();
-            toast.success("User deleted successfully");
-            refetch();
-        } catch (err) {
-            toast.error(err?.data?.message || "Failed to delete user");
-        }
+  const deleteHandler = async (userId) => {
+    try {
+      await deleteUser(userId).unwrap();
+      toast.success("User deleted successfully");
+      refetch();
+    } catch (err) {
+      toast.error(err?.data?.message || "Failed to delete user");
     }
+  };
+
   return (
-    <div>
-        <div className="container mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-6">Users List</h1>
+    <div className='container mx-auto p-6 bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen'>
+      <h1 className='text-4xl font-bold mb-8 text-center text-gray-800 animate-fade-in'>
+        Users List
+      </h1>
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger">{error.data?.message || "Failed to load users"}</Message>
+        <Message variant='danger'>
+          {error.data?.message || "Failed to load users"}
+        </Message>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-200">
-            <thead className="bg-gray-50">
+        <div className='overflow-x-auto bg-white shadow-lg rounded-lg animate-fade-in'>
+          <table className='min-w-full border border-gray-200'>
+            <thead className='bg-gray-200'>
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className='px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider'>
                   ID
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className='px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider'>
                   Name
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className='px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider'>
                   Email
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className='px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider'>
                   Admin
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
+                <th className='px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider'>
+                  Edit
+                </th>
+                <th className='px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider'>
+                  Delete
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
+            <tbody className='divide-y divide-gray-200'>
               {users.map((user) => (
-                <tr key={user._id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <tr
+                  key={user._id}
+                  className='hover:bg-gray-50 transition duration-300'
+                >
+                  <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
                     {user._id}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
                     {user.name}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
                     {user.email}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <td className='px-6 py-4 whitespace-nowrap text-sm'>
                     {user.isAdmin ? (
-                      <span
-                       className="px-2 py-1 bg-green-100 text-green-800 rounded-full">
-                      Yes
+                      <span className='px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold'>
+                        Yes
                       </span>
                     ) : (
-                      <span className="px-2 py-1 bg-red-100 text-red-800 rounded-full">
-                      No
+                      <span className='px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-semibold'>
+                        No
                       </span>
                     )}
                   </td>
-
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <td className='px-6 py-4 whitespace-nowrap text-sm'>
                     {userInfo._id !== user._id && !user.isAdmin && (
                       <Link
                         to={`/admin/edit-user/${user._id}`}
-                        className="px-4 py-2 bg-blue-400 text-white rounded-md hover:bg-red-700 transition duration-200"
+                        className='px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300 shadow-md'
                       >
-                        Edit User
+                        Edit
                       </Link>
                     )}
                   </td>
-
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <td className='px-6 py-4 whitespace-nowrap text-sm'>
                     {userInfo._id !== user._id && !user.isAdmin && (
                       <button
-                        onClick={() => handleDeleteCourse(user._id)}
-                        className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition duration-200"
+                        onClick={() => handleDeleteUser(user._id)}
+                        className='px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 shadow-md'
                       >
                         Delete
                       </button>
@@ -134,8 +143,7 @@ const UserListScreen = () => {
         </div>
       )}
     </div>
-    </div>
-  )
-}
+  );
+};
 
-export default UserListScreen
+export default UserListScreen;

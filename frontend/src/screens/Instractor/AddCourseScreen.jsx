@@ -7,7 +7,7 @@ import Message from '../../components/Message';
 const AddCourseScreen = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
   const [category, setCategory] = useState('Web Development'); // Default category
   const [uploading, setUploading] = useState(false);
@@ -54,24 +54,32 @@ const AddCourseScreen = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen p-6">
-      <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">Add New Course</h1>
+    <div className="bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen p-6">
+      <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg animate-fade-in">
+        <h1 className="text-4xl font-bold text-gray-800 mb-6 text-center">
+          Add New Course
+        </h1>
 
         {/* Display Loader or Error Message */}
         {isLoading && <Loader />}
-        {error && <Message variant="danger">{error?.data?.message || 'Failed to create course'}</Message>}
+        {error && (
+          <Message variant="danger">
+            {error?.data?.message || 'Failed to create course'}
+          </Message>
+        )}
 
         {/* Add Course Form */}
         <form onSubmit={submitHandler} encType="multipart/form-data">
           {/* Title */}
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Title</label>
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Title
+            </label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
               placeholder="Enter course title"
               required
             />
@@ -79,11 +87,13 @@ const AddCourseScreen = () => {
 
           {/* Description */}
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Description
+            </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
               placeholder="Enter course description"
               rows="4"
               required
@@ -92,43 +102,55 @@ const AddCourseScreen = () => {
 
           {/* Price */}
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Price</label>
-            <input
-              type="number"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter course price"
-              required
-            />
-          </div>
+  <label className="block text-gray-700 text-sm font-bold mb-2">
+    Price
+  </label>
+  <input
+    type="text"
+    value={price}
+    onChange={(e) => {
+      const value = e.target.value;
+      if (/^\d*$/.test(value)) {
+        setPrice(value); 
+      }
+    }}
+    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+    placeholder="Enter course price"
+    required
+  />
+</div>
+
 
           {/* Image Upload */}
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Image</label>
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Image
+            </label>
             <input
               type="text"
               value={image}
               onChange={(e) => setImage(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 mb-2"
               placeholder="Enter image URL"
               required
             />
             <input
               type="file"
               onChange={uploadFileHandler}
-              className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition duration-300"
             />
             {uploading && <Loader />}
           </div>
 
           {/* Category Dropdown */}
           <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Category</label>
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Category
+            </label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
               required
             >
               <option value="Web Development">Web Development</option>
@@ -142,7 +164,7 @@ const AddCourseScreen = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
           >
             Add Course
           </button>
