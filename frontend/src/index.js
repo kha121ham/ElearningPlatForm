@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 //import utilis
 import { Provider } from 'react-redux';
 import store from './store';
@@ -12,6 +13,7 @@ import {
   Route,
   RouterProvider
 } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 //import screens
 import HomeScreen from './screens/HomeScreen';
 import LogInScreen from './screens/LogInScreen';
@@ -69,9 +71,13 @@ const router = createBrowserRouter(
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-  <Provider store={store}>
-    <RouterProvider router={router} />
-  </Provider>
+  <HelmetProvider>
+    <Provider store={store}>
+      <PayPalScriptProvider options={{ "client-id": "your-client-id" }}>
+        <RouterProvider router={router} />
+      </PayPalScriptProvider>
+    </Provider>
+  </HelmetProvider>
   </React.StrictMode>
 );
 

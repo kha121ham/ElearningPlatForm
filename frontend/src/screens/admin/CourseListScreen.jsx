@@ -38,6 +38,7 @@ const CourseListScreen = () => {
     );
   };
 
+  console.log(courses)
   const confirmDelete = async (courseId) => {
     try {
       await deleteCourse(courseId).unwrap();

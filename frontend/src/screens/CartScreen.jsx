@@ -22,17 +22,23 @@ const CartScreen = () => {
 
   const checkoutHandler = async () => {
     try {
+      console.log('Cart Items Before Checkout:', cart.cartItems);
+      console.log('Items Price:', cart.itemsPrice);
+      console.log('Tax Price:', cart.taxPrice);
+      console.log('Total Price:', cart.totalPrice);
+  
       const res = await createOrder({
         orderItems: cart.cartItems.map((item) => ({
           _id: item._id,
           name: item.title,
-          price: item.price,
+          price: Number(item.price).toFixed(2), // Ensure 2 decimal places
           image: item.image,
         })),
-        itemsPrice: cart.itemsPrice,
-        taxPrice: cart.taxPrice,
-        totalPrice: cart.totalPrice,
+        itemsPrice: Number(cart.itemsPrice).toFixed(2), // Ensure 2 decimal places
+        taxPrice: Number(cart.taxPrice).toFixed(2), // Ensure 2 decimal places
+        totalPrice: Number(cart.totalPrice).toFixed(2), // Ensure 2 decimal places
       }).unwrap();
+      console.log('Order created:', res);
       dispatch(clearCartItems());
       navigate(`/order/${res._id}`);
     } catch (err) {

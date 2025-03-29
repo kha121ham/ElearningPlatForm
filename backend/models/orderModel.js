@@ -10,7 +10,7 @@ const orderSchema = new mongoose.Schema({
         {
             name: { type:String, required: true },
             image: { type: String, required: true },
-            price: { type: Number, required: true },
+            price: { type: Number, required: true, default: 0.00 },
             course: {
                 type: mongoose.Schema.Types.ObjectId,
                 required: true,
@@ -27,17 +27,17 @@ const orderSchema = new mongoose.Schema({
     itemsPrice: {
         type: Number,
         required: true,
-        default: 0.0
+        default: 0.00
     },
     taxPrice: {
         type: Number,
         required: true,
-        default: 0.0
+        default: 0.00
     },
     totalPrice: {
         type: Number,
         required: true,
-        default: 0.0
+        default: 0.00
     },
     isPaid: {
         type: Boolean,

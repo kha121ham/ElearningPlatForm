@@ -102,24 +102,23 @@ const AddCourseScreen = () => {
 
           {/* Price */}
           <div className="mb-4">
-  <label className="block text-gray-700 text-sm font-bold mb-2">
-    Price
-  </label>
-  <input
-    type="text"
-    value={price}
-    onChange={(e) => {
-      const value = e.target.value;
-      if (/^\d*$/.test(value)) {
-        setPrice(value); 
-      }
-    }}
-    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
-    placeholder="Enter course price"
-    required
-  />
-</div>
-
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Price
+            </label>
+            <input
+              type="text"
+              value={price}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^\d*\.?\d{0,2}$/.test(value)) {
+                  setPrice(value); // Allow only numbers with up to 2 decimal places
+                }
+              }}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+              placeholder="Enter course price"
+              required
+            />
+          </div>
 
           {/* Image Upload */}
           <div className="mb-4">

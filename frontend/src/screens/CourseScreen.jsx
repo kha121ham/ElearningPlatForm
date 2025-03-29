@@ -25,6 +25,7 @@ const CourseScreen = () => {
     error,
   } = useGetCourseDetailsQuery(courseId);
 
+  console.log(course);
   const isEnrolled = course
     ? course.enrolledStudents.includes(userInfo?._id)
     : false;
@@ -194,7 +195,7 @@ const CourseScreen = () => {
                 ${course.price.toFixed(2)}
               </h2>
               <button
-                onClick={handleBuyNow}
+                onClick={() => handleBuyNow(course)}
                 className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300"
               >
                 Buy Now

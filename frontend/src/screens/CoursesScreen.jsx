@@ -20,6 +20,8 @@ const CoursesScreen = () => {
     search,
   });
 
+  console.log(data)
+
   const courses = data?.courses || [];
   const totalPages = data?.pages || 1;
 

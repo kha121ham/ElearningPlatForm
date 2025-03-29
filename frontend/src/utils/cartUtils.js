@@ -1,4 +1,4 @@
-export const addDecimal = (num) => (Math.round(num*100)/100).toFixed(2);
+export const addDecimal = (num) => (Math.round(num * 100) / 100).toFixed(2);
 
 export const updateCart = (state) => {
     
@@ -8,9 +8,9 @@ export const updateCart = (state) => {
         Number(state.itemsPrice) +
         Number(state.taxPrice)
     ).toFixed(2);
-
+  
     
     localStorage.setItem('cart', JSON.stringify(state));
-
+  
     return state;
-};
+  };

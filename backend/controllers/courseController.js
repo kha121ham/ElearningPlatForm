@@ -1,6 +1,5 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Course from "../models/courseModel.js";
-import Content from '../models/contentModel.js';
 
 // @desc    Fetch All courses
 // @route   Get api/courses
@@ -32,7 +31,8 @@ const getCourses = asyncHandler(async (req, res) => {
     const skip = (page - 1) * pageSize;
 
     // Fetch courses with pagination and filtering
-    const courses = await Course.find(query)
+    const courses = await Course.find(query).select('-enrolledStudents')
+      .populate('instructor', 'name')
       .skip(skip)
       .limit(pageSize);
 
@@ -54,7 +54,8 @@ const getCourses = asyncHandler(async (req, res) => {
 // @route   Get api/courses/admin
 // @access  Private
 const getCoursesToAdmin = asyncHandler(async(req,res)=>{
-  const courses = await Course.find({}).populate('instructor', 'name');
+  const courses = await Course.find({}).populate('instructor', 'name'); 
+  console.log(courses)
   return res.status(200).json(courses);
 })
 
@@ -130,10 +131,9 @@ const createCourse = asyncHandler(async (req, res) => {
   // Create the course
   const course = new Course({
     title,
-    price,
+    price: Number(item.price).toFixed(2),
     instructor: req.user._id, // Set the instructor to the logged-in user
     image: image || "/images/sample.jpg", // Use provided image or a default
-    brand: brand || "Sample Brand", // Use provided brand or a default
     category,
     description,
     enrolledStudents: [], // Initialize enrolledStudents as an empty array
@@ -201,7 +201,7 @@ const createCourseReview = asyncHandler(async(req,res)=>{
 // @route   Get api/courses/top
 // @access  Public
 const getTopCourses = asyncHandler(async(req,res)=>{
-  const courses = await Course.find({}).sort({ rating: -1 }).limit(4);
+  const courses = await Course.find({}).sort({ rating: -1 }).limit(4).select('-enrolledStudents').populate('instructor', 'name');
 
   res.status(200).json(courses);
 });

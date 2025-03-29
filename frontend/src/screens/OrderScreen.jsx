@@ -1,8 +1,10 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
   useGetOrderDetailsQuery,
   usePayOrderMutation,
+  useGetPaypalClientIdQuery,
 } from "../slices/ordersApiSlices";
 import { useEnrollStudentToCourseMutation } from "../slices/coursesApiSlice";
 import Loader from "../components/Loader";
@@ -10,6 +12,7 @@ import Message from "../components/Message";
 import { toast } from "react-toastify";
 import NotUserOrderPage from "../components/NotUserOrderPage";
 import { useNavigate } from "react-router-dom";
+import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
@@ -23,6 +26,7 @@ const OrderScreen = () => {
     isLoading,
     error,
   } = useGetOrderDetailsQuery(orderId);
+  console.log(order)
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
   const [enrollStudentToCourse] = useEnrollStudentToCourseMutation();
@@ -32,27 +36,83 @@ const OrderScreen = () => {
     order &&
     (userInfo._id.toString() === order.user._id.toString() || userInfo.isAdmin);
 
-  const payHandler = async () => {
-    try {
-      await payOrder(orderId);
-      refetch();
-      toast.success("Order is paid");
+  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
-      if (order && order.orderItems) {
-        const courseIds = order.orderItems.map((item) => item.course);
-        for (const courseId of courseIds) {
-          try {
-            await enrollStudentToCourse(courseId).unwrap();
-            toast.success(`Enrolled in course ${courseId}`);
-          } catch (err) {
-            toast.error(`Failed to enroll in course ${courseId}: ${err.message}`);
-          }
+  const {
+    data: paypal,
+    isLoading: loadingPayPal,
+    error: errorPayPal,
+  } = useGetPaypalClientIdQuery();
+
+  useEffect(() => {
+    if (!errorPayPal && !loadingPayPal && paypal.clientId) {
+      const loadPaypalScript = async () => {
+        paypalDispatch({
+          type: "resetOptions",
+          value: {
+            "client-id": paypal.clientId,
+            currency: "USD",
+          },
+        });
+        paypalDispatch({ type: "setLoadingStatus", value: "pending" });
+      };
+      if (order && !order.isPaid) {
+        if (!window.paypal) {
+          loadPaypalScript();
         }
       }
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
     }
-  };
+  }, [errorPayPal, loadingPayPal, order, paypal, paypalDispatch]);
+
+  function createOrder(data, actions) {
+    return actions.order
+      .create({
+        purchase_units: [
+          {
+            amount: { value: order.totalPrice.toFixed(2) }, // Ensure the value is a string
+          },
+        ],
+      })
+      .then((orderID) => {
+        return orderID;
+      })
+      .catch((err) => {
+        toast.error("Failed to create order. Please try again.");
+        throw err;
+      });
+  }
+
+  function onApprove(data, actions) {
+    return actions.order
+      .capture()
+      .then(async function (details) {
+        try {
+          await payOrder({ orderId, details });
+          refetch();
+          toast.success("Order is paid");
+          if (order && order.orderItems) {
+            const courseIds = order.orderItems.map((item) => item.course);
+            for (const courseId of courseIds) {
+              try {
+                await enrollStudentToCourse(courseId).unwrap();
+                toast.success(`Enrolled in course ${courseId}`);
+              } catch (err) {
+                toast.error(`Failed to enroll in course ${courseId}: ${err.message}`);
+              }
+            }
+          }
+        } catch (err) {
+          toast.error(err?.data?.message || err.error);
+        }
+      })
+      .catch((err) => {
+        toast.error("Failed to capture payment. Please try again.");
+      });
+  }
+
+  function onError(err) {
+    toast.error(err.message);
+  }
 
   if (isLoading) return <Loader />;
   if (error) return <Message variant="danger">{error.data.message}</Message>;
@@ -77,7 +137,9 @@ const OrderScreen = () => {
         <div className="space-y-6">
           {/* Order Information */}
           <div className="border-b pb-4">
-            <h2 className="text-lg font-semibold text-gray-700">Order Information</h2>
+            <h2 className="text-lg font-semibold text-gray-700">
+              Order Information
+            </h2>
             <p className="text-gray-600">{`Order ID: ${order._id}`}</p>
             <p className="text-gray-600">{`Date: ${new Date(
               order.updatedAt
@@ -86,7 +148,9 @@ const OrderScreen = () => {
 
           {/* Customer Information */}
           <div className="border-b pb-4">
-            <h2 className="text-lg font-semibold text-gray-700">Customer Information</h2>
+            <h2 className="text-lg font-semibold text-gray-700">
+              Customer Information
+            </h2>
             <p className="text-gray-600">{`Name: ${order.user.name}`}</p>
             <p className="text-gray-600">{`Email: ${order.user.email}`}</p>
           </div>
@@ -106,7 +170,9 @@ const OrderScreen = () => {
                     className="w-16 h-16 object-cover rounded"
                   />
                   <div className="ml-4 flex-1 flex justify-between items-center">
-                    <p className="text-lg font-semibold text-gray-800">{item.name}</p>
+                    <p className="text-lg font-semibold text-gray-800">
+                      {item.name}
+                    </p>
                     <p className="text-gray-600">${item.price.toFixed(2)}</p>
                   </div>
                 </div>
@@ -116,7 +182,9 @@ const OrderScreen = () => {
 
           {/* Order Summary */}
           <div className="pt-4">
-            <h2 className="text-lg font-semibold text-gray-700">Order Summary</h2>
+            <h2 className="text-lg font-semibold text-gray-700">
+              Order Summary
+            </h2>
             <div className="mt-2">
               <p className="flex justify-between text-gray-600">
                 <span>Tax:</span>
@@ -131,30 +199,22 @@ const OrderScreen = () => {
 
           {/* Payment Section */}
           {!userInfo.isAdmin && !order.isPaid && (
-            <div className="pt-4">
-              <h2 className="text-lg font-semibold text-gray-700">Payment</h2>
-              <div className="mt-4 space-y-4">
-                <button
-                  type="button"
-                  onClick={payHandler}
-                  className="w-full flex items-center justify-center bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="w-6 h-6 mr-2"
-                  >
-                    <path d="M7.5 6.375a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM12 2.25c-2.429 0-4.5 1.978-4.5 4.375s2.071 4.375 4.5 4.375 4.5-1.978 4.5-4.375S14.429 2.25 12 2.25zM12 15.75c-2.429 0-4.5 1.978-4.5 4.375S9.571 24 12 24s4.5-1.978 4.5-4.375-2.071-4.375-4.5-4.375z" />
-                  </svg>
-                  <span>Pay with PayPal</span>
-                </button>
-                {loadingPay && <Loader />}
-
-                <button className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300">
-                  Pay with Credit Card
-                </button>
-              </div>
+            <div>
+              {loadingPay && <Loader />}
+              {isPending ? (
+                <Loader />
+              ) : (
+                <div className="pt-4">
+                  <h2 className="text-lg font-semibold text-gray-700">Payment</h2>
+                  <div>
+                    <PayPalButtons
+                      createOrder={createOrder}
+                      onApprove={onApprove}
+                      onError={onError}
+                    ></PayPalButtons>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
