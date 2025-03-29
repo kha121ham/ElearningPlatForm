@@ -59,7 +59,7 @@ const HomeScreen = () => {
                           ${course.price.toFixed(2)}
                         </span>
                         <span className="text-sm text-yellow-500 flex items-center">
-                          {course.rating} ⭐
+                          {course.rating.toFixed(2)} ⭐
                         </span>
                       </div>
                     </div>

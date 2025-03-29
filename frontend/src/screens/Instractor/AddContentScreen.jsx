@@ -1,134 +1,165 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import { removeFromCart, clearCartItems } from '../../slices/cartSlice';
-import { useCreateOrderMutation } from '../../slices/ordersApiSlices';
-import Message from '../../components/Message';
-import Loader from '../../components/Loader';
-import { toast } from 'react-toastify';
+import React, { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useAddContentMutation } from "../../slices/coursesApiSlice";
+import Loader from "../../components/Loader";
 
-const CartScreen = () => {
-  const dispatch = useDispatch();
+const AddContentScreen = () => {
+  const { courseId } = useParams();
   const navigate = useNavigate();
 
-  const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart;
+  // State for section form
+  const [sectionName, setSectionName] = useState("");
 
-  const removeFromCartHandler = (id) => {
-    dispatch(removeFromCart(id));
-  };
+  // State for video form
+  const [videoTitle, setVideoTitle] = useState("");
+  const [videoDescription, setVideoDescription] = useState("");
+  const [videoFile, setVideoFile] = useState(null);
 
-  const [createOrder, { isLoading, error }] = useCreateOrderMutation();
+  const [addContent, { isLoading }] = useAddContentMutation();
 
-  const checkoutHandler = async () => {
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Validate inputs
+    if (!sectionName || !videoTitle || !videoDescription || !videoFile) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
     try {
-      const res = await createOrder({
-        orderItems: cart.cartItems.map((item) => ({
-          _id: item._id,
-          name: item.title,
-          price: item.price,
-          image: item.image,
-        })),
-        itemsPrice: cart.itemsPrice,
-        taxPrice: cart.taxPrice,
-        totalPrice: cart.totalPrice,
-      }).unwrap();
-      dispatch(clearCartItems());
-      navigate(`/order/${res._id}`);
+      // Upload video file to the backend
+      const formData = new FormData();
+      formData.append("video", videoFile);
+
+      const uploadResponse = await fetch("/api/videos/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!uploadResponse.ok) {
+        throw new Error("Failed to upload video");
+      }
+
+      const uploadData = await uploadResponse.json();
+      console.log(uploadData.message);
+      const videoUrl = uploadData.videoPath;
+
+      // Prepare content data
+      const contentData = {
+        sectionName,
+        title: videoTitle,
+        description: videoDescription,
+        videoUrl,
+      };
+
+      // Submit content data
+      await addContent({ courseId, data: contentData }).unwrap();
+      toast.success("Content added successfully");
+
+      // Clear form fields after submission
+      setSectionName("");
+      setVideoTitle("");
+      setVideoDescription("");
+      setVideoFile(null);
+      navigate(-1);
     } catch (err) {
-      const errorMessage = err?.data?.message || err.message || 'An error occurred';
-      toast.error(errorMessage);
+      toast.error(err?.message || "Failed to add content");
+      console.error(err);
     }
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen">
-      <h1 className="text-4xl font-bold mb-8 text-center text-gray-800 animate-fade-in">
-        Shopping Cart
-      </h1>
-      {cartItems.length === 0 ? (
-        <div className="text-center">
-          <p className="text-gray-600">Your cart is empty.</p>
-          <Link
-            to="/"
-            className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+    <div className='max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md'>
+      {/* Page Title */}
+      <h1 className='text-3xl font-bold text-gray-900 mb-6'>Add Content</h1>
+
+      {/* Add Section Form */}
+      <div className='mb-8'>
+        <h2 className='text-xl font-semibold text-gray-800 mb-4'>
+          Add a New Section
+        </h2>
+        <form>
+          {/* Section Name Input */}
+          <div className='mb-4'>
+            <label className='block text-gray-700 font-semibold mb-2'>
+              Section Name
+            </label>
+            <input
+              type='text'
+              placeholder='Enter section name'
+              value={sectionName}
+              onChange={(e) => setSectionName(e.target.value)}
+              className='w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+              required
+            />
+          </div>
+        </form>
+      </div>
+
+      {/* Add Video Form */}
+      <div>
+        <h2 className='text-xl font-semibold text-gray-800 mb-4'>
+          Add a New Video
+        </h2>
+        <form onSubmit={handleSubmit}>
+          {/* Video Title Input */}
+          <div className='mb-4'>
+            <label className='block text-gray-700 font-semibold mb-2'>
+              Video Title
+            </label>
+            <input
+              type='text'
+              placeholder='Enter video title'
+              value={videoTitle}
+              onChange={(e) => setVideoTitle(e.target.value)}
+              className='w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+              required
+            />
+          </div>
+
+          {/* Video Description Input */}
+          <div className='mb-4'>
+            <label className='block text-gray-700 font-semibold mb-2'>
+              Video Description
+            </label>
+            <textarea
+              placeholder='Enter video description'
+              rows='4'
+              value={videoDescription}
+              onChange={(e) => setVideoDescription(e.target.value)}
+              className='w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+              required
+            ></textarea>
+          </div>
+
+          {/* Video File Input */}
+          <div className='mb-4'>
+            <label className='block text-gray-700 font-semibold mb-2'>
+              Upload Video
+            </label>
+            <input
+              type='file'
+              accept='video/*'
+              onChange={(e) => setVideoFile(e.target.files[0])}
+              className='w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+              required
+            />
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type='submit'
+            className='bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300'
+            disabled={isLoading}
           >
-            Go Back to Store
-          </Link>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-fade-in">
-          {/* Cart Items List */}
-          <div className="lg:col-span-2">
-            {cartItems.map((item) => (
-              <div
-                key={item._id}
-                className="flex flex-col sm:flex-row items-center justify-between border-b py-4 hover:bg-gray-50 transition duration-300"
-              >
-                <div className="flex items-center">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-20 h-20 object-cover rounded-lg shadow-md"
-                  />
-                  <div className="ml-4">
-                    <Link
-                      to={`/product/${item._id}`}
-                      className="text-lg font-semibold hover:text-blue-500 transition duration-300"
-                    >
-                      {item.name}
-                    </Link>
-                    <p className="text-gray-600">Price: ${item.price}</p>
-                  </div>
-                </div>
-                <button
-                  onClick={() => removeFromCartHandler(item._id)}
-                  className="mt-4 sm:mt-0 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300"
-                >
-                  Remove
-                </button>
-              </div>
-            ))}
-          </div>
-
-          {/* Order Summary */}
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-4 text-gray-800">Order Summary</h2>
-            <div className="space-y-4">
-              <div className="flex justify-between">
-                <span>Items Price:</span>
-                <span>${cart.itemsPrice}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Tax Price:</span>
-                <span>${cart.taxPrice}</span>
-              </div>
-              <div className="flex justify-between font-bold text-gray-800">
-                <span>Total Price:</span>
-                <span>${cart.totalPrice}</span>
-              </div>
-              {error && (
-                <Message variant="danger">{error?.data?.message || error.message}</Message>
-              )}
-              <button
-                onClick={checkoutHandler}
-                className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition duration-300"
-                disabled={cartItems.length === 0}
-              >
-                Proceed to Checkout
-              </button>
-
-              {isLoading && (
-                <div className="mt-4 flex justify-center">
-                  <Loader />
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+            {isLoading ? "Submitting..." && <Loader /> : "Submit Content"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
 
-export default CartScreen;
+export default AddContentScreen;

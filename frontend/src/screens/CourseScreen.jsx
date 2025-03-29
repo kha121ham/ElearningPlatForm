@@ -48,6 +48,12 @@ const CourseScreen = () => {
     (review) => review.user.toString() === userInfo?._id.toString()
   );
 
+  const averageRating =
+    course?.reviews?.length > 0
+      ? course.reviews.reduce((acc, review) => acc + review.rating, 0) /
+        course.reviews.length
+      : 0;
+
   const handleBuyNow = () => {
     dispatch(addToCart({ ...course }));
     navigate("/login?redirect=/cart");
@@ -113,6 +119,17 @@ const CourseScreen = () => {
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
             {course.title}
           </h1>
+
+          {/* Average Rating */}
+          <div className="flex items-center mb-4">
+            <span className="text-yellow-500 text-lg">
+              {"★".repeat(Math.round(averageRating))}
+              {"☆".repeat(5 - Math.round(averageRating))}
+            </span>
+            <span className="ml-2 text-gray-600">
+              ({course.reviews?.length || 0} reviews)
+            </span>
+          </div>
 
           {/* Course Description */}
           <p className="text-gray-600 text-lg mb-6">{course.description}</p>

@@ -55,7 +55,6 @@ const getCourses = asyncHandler(async (req, res) => {
 // @access  Private
 const getCoursesToAdmin = asyncHandler(async(req,res)=>{
   const courses = await Course.find({}).populate('instructor', 'name'); 
-  console.log(courses)
   return res.status(200).json(courses);
 })
 
@@ -118,7 +117,7 @@ const getCourseById = asyncHandler(async (req, res) => {
 // @route   POST api/courses
 // @access  Private/Teacher
 const createCourse = asyncHandler(async (req, res) => {
-  const { title, price, image, brand, category, description } = req.body;
+  const { title, price, image, category, description } = req.body;
 
   // Check if required fields are provided
   if (!title || !price || !category || !description) {
@@ -131,9 +130,9 @@ const createCourse = asyncHandler(async (req, res) => {
   // Create the course
   const course = new Course({
     title,
-    price: Number(item.price).toFixed(2),
+    price,
     instructor: req.user._id, // Set the instructor to the logged-in user
-    image: image || "/images/sample.jpg", // Use provided image or a default
+    image, // Use provided image or a default
     category,
     description,
     enrolledStudents: [], // Initialize enrolledStudents as an empty array
