@@ -32,7 +32,9 @@ const HomeScreen = () => {
         {isLoading ? (
           <Loader />
         ) : error ? (
-          <Message variant="danger">{error}</Message>
+          <Message variant="danger">
+            {error?.data?.message || "Something went wrong"}
+          </Message>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 px-6">
             {Array.isArray(courses) && courses.length > 0 ? (

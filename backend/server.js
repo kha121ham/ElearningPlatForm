@@ -40,6 +40,17 @@ const __dirname = path.resolve();
 app.use('/uploads',express.static(path.join(__dirname, '/uploads')));
 app.use('/videos',express.static(path.join(__dirname, '/videos')));
 
+//Define routes
+app.use('/api/users', userRoutes);
+app.use('/api/courses', courseRoutes);
+app.use('/api/upload', uploadRoutes);
+app.use('/api/content', contentRoutes);
+app.use('/api/orders', orderRoutes);
+app.use("/api/videos", videoRoutes);
+
+//PayPal setup
+app.get('/api/config/paypal', (req,res)=> res.send({ clientId: process.env.PAYPAL_CLIENT_ID }));
+
 if (process.env.NODE_ENV === 'production') {
     //set static folder
     app.use(express.static(path.join(__dirname, '/frontend/build')));
@@ -54,17 +65,6 @@ if (process.env.NODE_ENV === 'production') {
             res.send('API is running...');
             });
     } 
-
-//Define routes
-app.use('/api/users', userRoutes);
-app.use('/api/courses', courseRoutes);
-app.use('/api/upload', uploadRoutes);
-app.use('/api/content', contentRoutes);
-app.use('/api/orders', orderRoutes);
-app.use("/api/videos", videoRoutes);
-
-//PayPal setup
-app.get('/api/config/paypal', (req,res)=> res.send({ clientId: process.env.PAYPAL_CLIENT_ID }));
 
 //error middleware
 app.use(notFound);
