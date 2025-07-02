@@ -1,6 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import path from 'path';
+import { protect, allowedToUpload } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
@@ -32,7 +33,7 @@ const upload = multer({
 });
 
 // Route to upload a video
-router.post('/upload', upload.single('video'), (req, res) => {
+router.post('/upload', protect, allowedToUpload, upload.single('video'), (req, res) => {
     if (!req.file) {
         return res.status(400).json({ error: 'No video file uploaded' });
     }

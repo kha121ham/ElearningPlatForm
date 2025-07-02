@@ -59,6 +59,13 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             }),
             invalidatesTags: ['Users'],
         }),
+        supportUser: builder.mutation({
+            query: () => ({
+              url: `${USERS_URL}/support-token`, 
+              method: 'GET',
+              credentials: 'include', 
+            }),
+          }),
     }),
 });
 
@@ -71,4 +78,5 @@ export const {
     useDeleteUserMutation,
     useGetUserDetailsQuery,
     useUpdateUserMutation,
+    useSupportUserMutation,
     } = usersApiSlice;

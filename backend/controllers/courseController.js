@@ -1,5 +1,6 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Course from "../models/courseModel.js";
+import Order from "../models/orderModel.js";
 
 // @desc    Fetch All courses
 // @route   Get api/courses
@@ -234,6 +235,30 @@ const enrollStudentToCourse = asyncHandler(async (req, res) => {
   res.status(200).json({ message: 'Student enrolled successfully', course: updatedCourse });
 });
 
+// @desc    Get student courses
+// @route   GET api/courses/me
+// @access  Private
+const getStudentCourses = asyncHandler(async(req,res) => {
+  const userId = req.user._id;
+  const courses = await Course.find({ enrolledStudents: userId }).select('-enrolledStudents').populate('instructor', 'name');
+  res.status(200).json(courses);
+});
+
+// @desc    Check if course is pending
+// @route   GET api/courses/:id/pending
+// @access  Private
+const courseIsPending = asyncHandler(async(req,res) => {
+  const courseId = req.params.id;
+  const userOrdersNotPaid = await Order.find({ user: req.user._id ,isPaid: false });
+  const courseIsPending = userOrdersNotPaid.some((OrderItem) => {
+    return OrderItem.orderItems.some((item) => item.course.toString() === courseId.toString())
+  });
+  
+
+  res.status(201).json({ isPending: courseIsPending })
+
+});
+
 export { 
   createCourse, 
   getCourseById, 
@@ -244,5 +269,7 @@ export {
   getCoursesToAdmin,
   deleteCoursesByAdmin,
   getInstructorCourses,
-  deleteInstructorCourse
+  deleteInstructorCourse,
+  getStudentCourses,
+  courseIsPending
 };

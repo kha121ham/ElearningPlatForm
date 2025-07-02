@@ -24,6 +24,12 @@ app.use(express.urlencoded({ extended: true }));
 //Cookie parser middleware
 app.use(cookieParser());
 
+//CORS middleware
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+  }));
+
 
 //ConnectDB
 connectDB();

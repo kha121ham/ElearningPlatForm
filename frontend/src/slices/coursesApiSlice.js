@@ -94,6 +94,18 @@ export const coursesApiSlice = apiSlice.injectEndpoints({
         method: 'DELETE'
       }),
     }),
+    getStudentCourses: builder.query({
+      query: () => ({
+        url: `${COURSES_URL}/me`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    courseIsPending: builder.query({
+      query: (courseId)=> ({
+        url:`${COURSES_URL}/${courseId}/pending`
+      }),
+      keepUnusedDataFor: 5,
+    })
   }),
 });
 
@@ -111,4 +123,6 @@ export const {
   useDeleteCourseMutation,
   useGetInstructorCoursesQuery,
   useDeleteInstructorCourseMutation,
+  useGetStudentCoursesQuery,
+  useCourseIsPendingQuery
 } = coursesApiSlice;

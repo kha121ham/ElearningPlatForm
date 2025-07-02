@@ -11,6 +11,7 @@ import { addToCart } from "../slices/cartSlice";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { FaPlus, FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { useCourseIsPendingQuery } from "../slices/coursesApiSlice";
 
 const CourseScreen = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,11 @@ const CourseScreen = () => {
     isLoading,
     error,
   } = useGetCourseDetailsQuery(courseId);
+
+  const { data: isPending, isLoading: pendingLoading } = useCourseIsPendingQuery(courseId);
+  /*if (!pendingLoading && isPending) {
+    console.log('Pending status:', isPending.isPending);
+  }*/
 
   console.log(course);
   const isEnrolled = course
@@ -211,12 +217,27 @@ const CourseScreen = () => {
               <h2 className="text-2xl font-bold text-gray-900">
                 ${course.price.toFixed(2)}
               </h2>
-              <button
-                onClick={() => handleBuyNow(course)}
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300"
-              >
-                Buy Now
-              </button>
+              {pendingLoading ? (
+  <p>Checking...</p>
+) : isPending?.isPending ? (
+  <button
+    disabled
+    className="bg-yellow-500 text-white px-6 py-2 rounded-lg cursor-default"
+  >
+    Pending...
+  </button>
+) : (
+  <>
+    <button
+      onClick={() => handleBuyNow(course)}
+      className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300"
+    >
+      Buy Now
+    </button>
+
+  </>
+)}
+
             </div>
           )}
 

@@ -40,10 +40,19 @@ const instructor = (req,res,next) => {
     if(req.user && req.user.role === 'instructor') {
         next();
     } else {
-        res.status(401);
+        res.status(403);
         throw new Error('Not authorized as instractor');
     }
 
 };
 
-export { protect, admin, instructor };
+const allowedToUpload = (req,res,next) => {
+    if(req.user && (req.user.isAdmin || req.user.role === 'instructor')) {
+        next();
+    } else {
+        res.status(403);
+        throw new Error('Not authorized to Upload');
+    }
+};
+
+export { protect, admin, instructor, allowedToUpload };

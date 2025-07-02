@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
 import { resetCart } from "../slices/cartSlice";
+import SupportButton from "./SupportButton";
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -69,6 +70,7 @@ const Header = () => {
             >
               About
             </Link>
+            {/*{userInfo && <SupportButton />}*/}
           </div>
 
           {/* Cart and User Section */}
@@ -78,7 +80,7 @@ const Header = () => {
               <svg
                 className="w-8 h-8 text-gray-800 hover:text-gray-600 transition duration-300"
                 fill="none"
-                stroke="currentColor"
+                stroke="currentColor" 
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -131,6 +133,13 @@ const Header = () => {
                       onClick={() => setIsDropdownOpen(false)}
                     >
                       Profile
+                    </Link>
+                    <Link
+                      to="/student-courses"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      Courses
                     </Link>
                     {userInfo && userInfo.isAdmin && (
                       <>

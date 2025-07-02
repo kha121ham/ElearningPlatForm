@@ -2,6 +2,7 @@ import asyncHandler from '../middleware/asyncHandler.js';
 import User from '../models/userModel.js';
 import generateToken from '../utilis/generateToken.js';
 import { Error } from 'mongoose';
+import jwt from 'jsonwebtoken';
 // @desc    Auth user && get token
 // @route   Post api/users/login
 // @access  Public
@@ -157,6 +158,20 @@ const getUserById = asyncHandler(async (req, res) => {
     }
 });
 
+// @desc    Get user by id
+// @route   Get api/users/support/:id
+// @access  Private/Admin
+const getUserByIdToSupport = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+
+    if (user) {
+        res.status(200).json(user);
+    } else {
+        res.status(404);
+        throw new Error('User not found');
+    }
+});
+
 // @desc    Delete user
 // @route   DELETE api/users/:id
 // @access  Private/Admin
@@ -204,6 +219,19 @@ const updateUser = asyncHandler(async (req, res) => {
     }
 });
 
+// @desc    Support user
+// @route   GET api/users/support-token
+// @access  Private
+const supportUser = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);
+    if(!user) {
+        res.status(404);
+        throw new Error('User not found');
+    }
+    const supportToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    res.status(200).json({ supportToken });
+});
+
 export {
     authUser,
     registerUser,
@@ -213,5 +241,7 @@ export {
     getUsers,
     deleteUser,
     getUserById,
-    updateUser
+    updateUser,
+    supportUser,
+    getUserByIdToSupport
 };

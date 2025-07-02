@@ -16,6 +16,7 @@ import {
 import { HelmetProvider } from 'react-helmet-async';
 //import screens
 import HomeScreen from './screens/HomeScreen';
+import StudentCoursesScreen from './screens/StudentCoursesScreen';
 import LogInScreen from './screens/LogInScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import CoursesScreen from './screens/CoursesScreen';
@@ -54,6 +55,7 @@ const router = createBrowserRouter(
       <Route path='/cart' element={<CartScreen />} />
       <Route path='/courses/:id/video/:videoId' element={<VideoScreen />} />
       <Route path='/profile' element={<ProfileScreen />} />
+      <Route path='/student-courses' element={<StudentCoursesScreen />} />
       </Route>
 
       <Route path='' element={<AdminRoute />}>
