@@ -15,6 +15,7 @@ const Header = () => {
   const [logoutApiCall] = useLogoutMutation();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -54,7 +55,22 @@ const Header = () => {
               <span className="font-semibold">eLearning</span>
             </Link>
           </div>
-          <div className="flex flex-col sm:flex-row items-center w-full sm:w-auto gap-2 sm:gap-6 md:gap-8 text-base">
+          {/* Hamburger for mobile */}
+          <button
+            className="sm:hidden flex items-center px-3 py-2 border rounded text-slate-700 border-slate-300 hover:text-blue-600 hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            aria-label="Toggle navigation menu"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {menuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+          {/* Nav links - desktop */}
+          <div className="hidden sm:flex flex-1 justify-center items-center gap-6">
             <div className="flex flex-col sm:flex-row w-full justify-center sm:justify-start gap-2 sm:gap-0">
               <Link to="/" className="text-gray-800 hover:text-blue-600 font-medium transition-all duration-300 hover:scale-105 relative group px-2 py-1 sm:py-0">
                 Home
@@ -70,6 +86,27 @@ const Header = () => {
               </Link>
             </div>
           </div>
+          {/* Nav links - mobile dropdown */}
+          {menuOpen && (
+            <div className="sm:hidden absolute top-full left-0 w-full bg-white border-b border-slate-200 shadow-md animate-fade-in z-50">
+              <div className="flex flex-col items-center gap-4 py-4">
+                <div className="flex flex-col sm:flex-row w-full justify-center sm:justify-start gap-2 sm:gap-0">
+                  <Link to="/" className="text-gray-800 hover:text-blue-600 font-medium transition-all duration-300 hover:scale-105 relative group px-2 py-1 sm:py-0">
+                    Home
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                  </Link>
+                  <Link to="/courses" className="text-gray-800 hover:text-blue-600 font-medium transition-all duration-300 hover:scale-105 relative group px-2 py-1 sm:py-0">
+                    Courses
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                  </Link>
+                  <Link to="/about" className="text-gray-800 hover:text-blue-600 font-medium transition-all duration-300 hover:scale-105 relative group px-2 py-1 sm:py-0">
+                    About
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
           <div className="flex items-center gap-2 sm:gap-4 md:gap-6 mt-2 sm:mt-0 w-full sm:w-auto justify-center sm:justify-end">
             <Link to="/cart" className="relative group">
               <div className="p-2 rounded-xl bg-gray-100 hover:bg-blue-100 transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md">
