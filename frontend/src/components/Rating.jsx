@@ -1,29 +1,35 @@
 import React from 'react';
-import { FaStar, FaStarHalfAlt, FaRegStar} from 'react-icons/fa';
+import { Star } from 'lucide-react';
 
 const Rating = ({ value, text }) => {
   return (
-    <div className='rating'>
-        <span>
-            {value >=1 ? <FaStar /> : value >=0.5 ? <FaStarHalfAlt /> : <FaRegStar/>}
-        </span>
-        <span>
-            {value >=2 ? <FaStar /> : value >=1.5 ? <FaStarHalfAlt /> : <FaRegStar/>}
-        </span>
-        <span>
-            {value >=3 ? <FaStar /> : value >=2.5 ? <FaStarHalfAlt /> : <FaRegStar/>}
-        </span>
-        <span>
-            {value >=4 ? <FaStar /> : value >=3.5 ? <FaStarHalfAlt /> : <FaRegStar/>}
-        </span>
-        <span>
-            {value >=5 ? <FaStar /> : value >=4.5 ? <FaStarHalfAlt /> : <FaRegStar/>}
-        </span>
-        <span className="rating-text">
-            { text &&  text }
-        </span>
-    </div>
-  )
-}
+    <div className="flex items-center space-x-1">
+      <div className="flex items-center space-x-0.5">
+        {[1, 2, 3, 4, 5].map((star) => (
+          <span key={star} className="relative">
+            {value >= star ? (
+              <Star className="w-4 h-4 text-amber-400 fill-amber-400 transition-colors duration-300" />
+            ) : value >= star - 0.5 ? (
+              <div className="relative">
+                <Star className="w-4 h-4 text-slate-200 fill-slate-200" />
+                <div className="absolute inset-0 overflow-hidden" style={{ width: '50%' }}>
+                  <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+                </div>
+              </div>
+            ) : (
+              <Star className="w-4 h-4 text-slate-200 fill-slate-200 transition-colors duration-300" />
+            )}
+          </span>
+        ))}
+      </div>
 
-export default Rating
+      {text && (
+        <span className="text-sm text-slate-500 font-light ml-2 tracking-wide">
+          {text}
+        </span>
+      )}
+    </div>
+  );
+};
+
+export default Rating;
