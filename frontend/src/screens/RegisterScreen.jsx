@@ -96,7 +96,7 @@ const RegisterScreen = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-100 via-gray-50 to-blue-50 flex">
       {/* Left Side - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-indigo-600 to-purple-700 p-12 flex-col justify-between relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-600 to-indigo-700 p-8 sm:p-12 flex-col justify-between relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative z-10">
           <div className="flex items-center space-x-3 mb-8">
@@ -133,7 +133,7 @@ const RegisterScreen = () => {
       </div>
 
       {/* Right Side - Register Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-8">
         <div className="w-full max-w-md">
           <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-8">
             <div className="text-center mb-8">

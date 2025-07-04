@@ -67,7 +67,7 @@ const CartScreen = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/20">
-      <div className="container mx-auto px-4 py-12 max-w-7xl">
+      <div className="container mx-auto px-2 sm:px-4 py-8 sm:py-12 max-w-7xl">
         <div className="text-center mb-12">
           <h1 className="text-3xl sm:text-4xl font-light text-slate-700 mb-3 tracking-wide">
             Shopping Cart
@@ -117,9 +117,7 @@ const CartScreen = () => {
                             alt={item.name}
                             loading="lazy"
                             decoding="async"
-                            width="80"
-                            height="80"
-                            className="w-20 h-20 object-cover rounded-2xl shadow-sm border border-slate-200/50"
+                            className="w-full max-w-[80px] h-20 object-cover rounded-2xl shadow-sm border border-slate-200/50"
                           />
                         </div>
 

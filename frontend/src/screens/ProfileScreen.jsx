@@ -56,7 +56,7 @@ const ProfileScreen = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-7xl">
+      <div className="container mx-auto px-2 sm:px-6 lg:px-8 py-6 sm:py-8 max-w-7xl">
         {/* Page Header */}
         <div className="mb-8">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-medium text-slate-800 mb-2 leading-tight">
@@ -141,16 +141,14 @@ const ProfileScreen = () => {
                     </label>
                     <div className="bg-slate-50/50 rounded-2xl p-4 border border-slate-200/40">
                       <div className="flex items-center gap-3">
-                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                          role === "student" 
-                            ? 'bg-blue-100' 
+                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${role === "student"
+                            ? 'bg-blue-100'
                             : 'bg-emerald-100'
-                        }`}>
-                          <svg className={`w-4 h-4 ${
-                            role === "student" 
-                              ? 'text-blue-600' 
+                          }`}>
+                          <svg className={`w-4 h-4 ${role === "student"
+                              ? 'text-blue-600'
                               : 'text-emerald-600'
-                          }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             {role === "student" ? (
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                             ) : (
@@ -247,7 +245,7 @@ const ProfileScreen = () => {
                             </div>
                           </div>
                         </div>
-                        
+
                         <div className="flex items-center gap-3">
                           {order.isPaid ? (
                             <div className="inline-flex items-center gap-2 bg-emerald-50/80 backdrop-blur-sm border border-emerald-200/40 rounded-full px-4 py-2">
@@ -260,7 +258,7 @@ const ProfileScreen = () => {
                               <span className="text-amber-700 text-sm font-medium">Pending</span>
                             </div>
                           )}
-                          
+
                           <div className="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center group-hover:bg-slate-200 transition-colors">
                             <svg className="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

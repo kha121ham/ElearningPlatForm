@@ -58,7 +58,7 @@ const MyCoursesScreen = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-7xl">
+      <div className="container mx-auto px-2 sm:px-4 lg:px-8 py-6 sm:py-8 max-w-7xl">
         {/* Page Header */}
         <div className="mb-8">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-medium text-slate-800 mb-2 leading-tight">
@@ -94,7 +94,7 @@ const MyCoursesScreen = () => {
             </div>
             <h3 className="text-xl font-medium text-slate-800 mb-2">No courses created yet</h3>
             <p className="text-slate-500 font-light mb-6">Start sharing your knowledge by creating your first course</p>
-            
+
             <Link
               to="/add-course"
               className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium rounded-2xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 hover:shadow-lg"
@@ -137,9 +137,8 @@ const MyCoursesScreen = () => {
                   {courses?.map((course, index) => (
                     <tr
                       key={course._id}
-                      className={`hover:bg-slate-50/50 transition-all duration-300 ${
-                        index % 2 === 0 ? 'bg-white/50' : 'bg-slate-50/20'
-                      }`}
+                      className={`hover:bg-slate-50/50 transition-all duration-300 ${index % 2 === 0 ? 'bg-white/50' : 'bg-slate-50/20'
+                        }`}
                     >
                       <td className="py-4 px-6">
                         <span className="text-slate-500 text-sm font-mono">

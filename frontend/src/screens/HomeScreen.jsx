@@ -12,40 +12,40 @@ const HomeScreen = () => {
   const { data: courses, isLoading, error } = useGetTopCoursesQuery();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40 overflow-x-hidden">
       <header className="relative overflow-hidden bg-white/70 backdrop-blur-sm">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-100/40 via-indigo-50/30 to-purple-50/40"></div>
-        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 text-center max-w-4xl">
+        <div className="relative container mx-auto px-2 sm:px-6 lg:px-8 pt-10 sm:pt-16 pb-10 sm:pb-20 text-center max-w-4xl">
           <div className="mb-6">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl mb-6 shadow-lg shadow-blue-500/25">
+            <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl mb-6 shadow-lg shadow-blue-500/25">
               <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
             </div>
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light text-slate-800 mb-6 tracking-tight leading-tight">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-light text-slate-800 mb-4 sm:mb-6 tracking-tight leading-tight">
             <span className="font-medium bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
               E-Learning
             </span>
             <br />
             <span className="text-slate-600 font-extralight">Platform</span>
           </h1>
-          <p className="text-lg sm:text-xl text-slate-500 font-light max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-xl text-slate-500 font-light max-w-2xl mx-auto leading-relaxed">
             Discover knowledge that transforms. Learn at your own pace with our curated collection of courses.
           </p>
-          <div className="mt-8 flex justify-center">
-            <div className="w-20 h-0.5 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full opacity-60"></div>
+          <div className="mt-6 sm:mt-8 flex justify-center">
+            <div className="w-16 sm:w-20 h-0.5 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full opacity-60"></div>
           </div>
         </div>
       </header>
 
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <section className="py-8 sm:py-16 px-2 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-slate-700 mb-4 tracking-tight">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-xl sm:text-3xl md:text-4xl font-light text-slate-700 mb-2 sm:mb-4 tracking-tight">
               <span className="font-medium">Featured</span> Courses
             </h2>
-            <p className="text-slate-500 text-base sm:text-lg max-w-2xl mx-auto font-light leading-relaxed">
+            <p className="text-slate-500 text-sm sm:text-lg max-w-2xl mx-auto font-light leading-relaxed">
               Handpicked courses from industry experts to accelerate your learning journey
             </p>
           </div>
@@ -75,9 +75,7 @@ const HomeScreen = () => {
                           alt={course.title}
                           loading="lazy"
                           decoding="async"
-                          width="400"
-                          height="208"
-                          className="w-full h-48 sm:h-52 object-cover transition-transform duration-700 group-hover:scale-105"
+                          className="w-full max-w-full h-48 sm:h-52 object-cover transition-transform duration-700 group-hover:scale-105"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 border border-slate-200/50 shadow-sm">

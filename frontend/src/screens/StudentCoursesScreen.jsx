@@ -41,7 +41,7 @@ const StudentCoursesScreen = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-7xl">
+            <div className="container mx-auto px-2 sm:px-6 lg:px-8 py-6 sm:py-8 max-w-7xl">
                 {/* Page Header */}
                 <div className="mb-8">
                     <h1 className="text-2xl sm:text-3xl lg:text-4xl font-medium text-slate-800 mb-2 leading-tight">

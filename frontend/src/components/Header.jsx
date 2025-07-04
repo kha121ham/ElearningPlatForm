@@ -43,8 +43,8 @@ const Header = () => {
   return (
     <>
       <nav className="bg-white/95 backdrop-blur-md border-b border-gray-300 sticky top-0 z-40 shadow-md shadow-gray-200/50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap justify-between items-center max-w-screen-xl">
-          <div className="text-2xl sm:text-3xl font-semibold text-gray-900 hover:text-blue-600 transition-all duration-300 tracking-wide">
+        <div className="container mx-auto px-2 sm:px-6 lg:px-8 py-3 sm:py-4 flex flex-col sm:flex-row justify-between items-center max-w-screen-xl gap-3 sm:gap-0 w-full">
+          <div className="text-2xl sm:text-3xl font-semibold text-gray-900 hover:text-blue-600 transition-all duration-300 tracking-wide mb-2 sm:mb-0">
             <Link to="/" className="flex items-center gap-2">
               <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl flex items-center justify-center shadow-md">
                 <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -54,32 +54,23 @@ const Header = () => {
               <span className="font-semibold">eLearning</span>
             </Link>
           </div>
-
-          <div className="flex items-center space-x-6 sm:space-x-8 text-base">
-            <Link
-              to="/"
-              className="text-gray-800 hover:text-blue-600 font-medium transition-all duration-300 hover:scale-105 relative group"
-            >
-              Home
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:w-full transition-all duration-300 rounded-full"></span>
-            </Link>
-            <Link
-              to="/courses"
-              className="text-gray-800 hover:text-blue-600 font-medium transition-all duration-300 hover:scale-105 relative group"
-            >
-              Courses
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:w-full transition-all duration-300 rounded-full"></span>
-            </Link>
-            <Link
-              to="/about"
-              className="text-gray-800 hover:text-blue-600 font-medium transition-all duration-300 hover:scale-105 relative group"
-            >
-              About
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:w-full transition-all duration-300 rounded-full"></span>
-            </Link>
+          <div className="flex flex-col sm:flex-row items-center w-full sm:w-auto gap-2 sm:gap-6 md:gap-8 text-base">
+            <div className="flex flex-col sm:flex-row w-full justify-center sm:justify-start gap-2 sm:gap-0">
+              <Link to="/" className="text-gray-800 hover:text-blue-600 font-medium transition-all duration-300 hover:scale-105 relative group px-2 py-1 sm:py-0">
+                Home
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:w-full transition-all duration-300 rounded-full"></span>
+              </Link>
+              <Link to="/courses" className="text-gray-800 hover:text-blue-600 font-medium transition-all duration-300 hover:scale-105 relative group px-2 py-1 sm:py-0">
+                Courses
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:w-full transition-all duration-300 rounded-full"></span>
+              </Link>
+              <Link to="/about" className="text-gray-800 hover:text-blue-600 font-medium transition-all duration-300 hover:scale-105 relative group px-2 py-1 sm:py-0">
+                About
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:w-full transition-all duration-300 rounded-full"></span>
+              </Link>
+            </div>
           </div>
-
-          <div className="flex items-center space-x-4 sm:space-x-6">
+          <div className="flex items-center gap-2 sm:gap-4 md:gap-6 mt-2 sm:mt-0 w-full sm:w-auto justify-center sm:justify-end">
             <Link to="/cart" className="relative group">
               <div className="p-2 rounded-xl bg-gray-100 hover:bg-blue-100 transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md">
                 <svg

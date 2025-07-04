@@ -1,24 +1,24 @@
 const AboutScreen = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40 py-6 sm:py-12 px-2 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-slate-800 mb-6 tracking-tight">
+        <div className="text-center mb-10 sm:mb-16">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-light text-slate-800 mb-4 sm:mb-6 tracking-tight">
             <span className="font-medium bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
               About Us
             </span>
           </h2>
-          <p className="text-lg text-slate-500 font-light max-w-4xl mx-auto leading-relaxed mb-8">
+          <p className="text-base sm:text-lg text-slate-500 font-light max-w-4xl mx-auto leading-relaxed mb-6 sm:mb-8">
             Welcome to our E-Learning platform! Our mission is to provide high-quality education
             accessible to everyone, anywhere in the world. We offer a variety of courses designed by
             industry experts to help you learn and grow.
           </p>
           <div className="flex justify-center">
-            <div className="w-20 h-0.5 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full opacity-60"></div>
+            <div className="w-16 sm:w-20 h-0.5 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full opacity-60"></div>
           </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-20">
           <div className="group bg-white/70 backdrop-blur-sm rounded-3xl border border-slate-200/60 shadow-sm hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-500 hover:-translate-y-1 hover:border-blue-200/60 p-8 text-center">
             <div className="w-16 h-16 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-100/60 flex items-center justify-center mx-auto mb-6 group-hover:shadow-lg group-hover:shadow-blue-500/20 transition-all duration-300">
               <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

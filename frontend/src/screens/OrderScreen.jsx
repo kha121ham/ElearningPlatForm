@@ -160,45 +160,42 @@ const OrderScreen = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/20">
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <div className="container mx-auto px-2 sm:px-4 py-6 sm:py-8 max-w-4xl">
         {/* Header with Back Button */}
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <button
             onClick={() => navigate(-1)}
-            className="inline-flex items-center space-x-2 text-slate-600 hover:text-blue-600 transition-colors duration-200 mb-6 group"
+            className="inline-flex items-center space-x-2 text-slate-600 hover:text-blue-600 transition-colors duration-200 mb-4 sm:mb-6 group text-base sm:text-lg"
           >
             <ArrowLeftIcon />
             <span className="font-medium">Back to Orders</span>
           </button>
-
           <div className="text-center">
-            <h1 className="text-3xl sm:text-4xl font-light text-slate-700 mb-3 tracking-wide">
+            <h1 className="text-2xl sm:text-3xl font-light text-slate-700 mb-2 sm:mb-3 tracking-wide">
               Order Details
             </h1>
-            <div className="w-24 h-0.5 bg-gradient-to-r from-blue-200 to-indigo-200 mx-auto"></div>
+            <div className="w-16 sm:w-24 h-0.5 bg-gradient-to-r from-blue-200 to-indigo-200 mx-auto"></div>
           </div>
         </div>
-
         {/* Main Content */}
-        <div className="bg-white/60 backdrop-blur-sm rounded-3xl border border-slate-200/50 shadow-sm overflow-hidden">
-          <div className="p-8 space-y-8">
-
+        <div className="bg-white/60 backdrop-blur-sm rounded-2xl sm:rounded-3xl border border-slate-200/50 shadow-sm overflow-hidden">
+          <div className="p-4 sm:p-8 space-y-6 sm:space-y-8">
             {/* Order Information */}
-            <div className="bg-gradient-to-r from-blue-50/50 to-indigo-50/50 rounded-2xl p-6 border border-blue-100/50">
-              <div className="flex items-center space-x-3 mb-4">
+            <div className="bg-gradient-to-r from-blue-50/50 to-indigo-50/50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-blue-100/50">
+              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                 <DocumentIcon />
-                <h2 className="text-xl font-medium text-slate-700">Order Information</h2>
+                <h2 className="text-lg sm:text-xl font-medium text-slate-700">Order Information</h2>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
-                  <p className="text-sm text-slate-500 mb-1">Order ID</p>
-                  <p className="font-mono text-slate-700 bg-white/60 px-3 py-2 rounded-lg text-sm">
+                  <p className="text-xs sm:text-sm text-slate-500 mb-1">Order ID</p>
+                  <p className="font-mono text-slate-700 bg-white/60 px-2 sm:px-3 py-2 rounded-lg text-xs sm:text-sm break-all">
                     {order._id}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-slate-500 mb-1">Order Date</p>
-                  <p className="text-slate-700 bg-white/60 px-3 py-2 rounded-lg">
+                  <p className="text-xs sm:text-sm text-slate-500 mb-1">Order Date</p>
+                  <p className="text-slate-700 bg-white/60 px-2 sm:px-3 py-2 rounded-lg text-xs sm:text-sm">
                     {new Date(order.updatedAt).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'long',
@@ -210,55 +207,53 @@ const OrderScreen = () => {
                 </div>
               </div>
             </div>
-
             {/* Customer Information */}
-            <div className="bg-gradient-to-r from-emerald-50/50 to-teal-50/50 rounded-2xl p-6 border border-emerald-100/50">
-              <div className="flex items-center space-x-3 mb-4">
+            <div className="bg-gradient-to-r from-emerald-50/50 to-teal-50/50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-emerald-100/50">
+              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                 <UserIcon />
-                <h2 className="text-xl font-medium text-slate-700">Customer Information</h2>
+                <h2 className="text-lg sm:text-xl font-medium text-slate-700">Customer Information</h2>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
-                  <p className="text-sm text-slate-500 mb-1">Customer Name</p>
-                  <p className="text-slate-700 bg-white/60 px-3 py-2 rounded-lg">
+                  <p className="text-xs sm:text-sm text-slate-500 mb-1">Customer Name</p>
+                  <p className="text-slate-700 bg-white/60 px-2 sm:px-3 py-2 rounded-lg text-xs sm:text-sm">
                     {order.user.name}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-slate-500 mb-1">Email Address</p>
-                  <p className="text-slate-700 bg-white/60 px-3 py-2 rounded-lg">
+                  <p className="text-xs sm:text-sm text-slate-500 mb-1">Email Address</p>
+                  <p className="text-slate-700 bg-white/60 px-2 sm:px-3 py-2 rounded-lg text-xs sm:text-sm break-all">
                     {order.user.email}
                   </p>
                 </div>
               </div>
             </div>
-
             {/* Order Items */}
-            <div className="bg-gradient-to-r from-purple-50/50 to-pink-50/50 rounded-2xl p-6 border border-purple-100/50">
-              <div className="flex items-center space-x-3 mb-6">
+            <div className="bg-gradient-to-r from-purple-50/50 to-pink-50/50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-purple-100/50">
+              <div className="flex items-center gap-2 sm:gap-3 mb-4">
                 <ShoppingBagIcon />
-                <h2 className="text-xl font-medium text-slate-700">Order Items</h2>
+                <h2 className="text-lg sm:text-xl font-medium text-slate-700">Order Items</h2>
               </div>
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {order.orderItems.map((item) => (
                   <div
                     key={item._id}
-                    className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-white/50 hover:shadow-md transition-shadow duration-200"
+                    className="bg-white/60 backdrop-blur-sm rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/50 hover:shadow-md transition-shadow duration-200"
                   >
-                    <div className="flex items-center space-x-4">
+                    <div className="flex flex-col xs:flex-row items-start xs:items-center gap-3 xs:gap-4">
                       <img
                         src={item.image}
                         alt={item.name}
-                        className="w-16 h-16 object-cover rounded-xl border border-slate-200/50 shadow-sm"
+                        className="w-16 h-16 xs:w-20 xs:h-20 object-cover rounded-xl border border-slate-200/50 shadow-sm max-w-full"
                       />
-                      <div className="flex-grow min-w-0">
-                        <h3 className="font-medium text-slate-700 mb-1 truncate">
+                      <div className="flex-grow min-w-0 w-full">
+                        <h3 className="font-medium text-slate-700 mb-1 truncate text-sm sm:text-base">
                           {item.name}
                         </h3>
-                        <p className="text-slate-500 text-sm">Course Item</p>
+                        <p className="text-slate-500 text-xs sm:text-sm">Course Item</p>
                       </div>
-                      <div className="text-right">
-                        <p className="font-semibold text-slate-700">
+                      <div className="text-right w-full xs:w-auto mt-2 xs:mt-0">
+                        <p className="font-semibold text-slate-700 text-base sm:text-lg">
                           ${Number(item.price).toFixed(2)}
                         </p>
                       </div>
@@ -267,45 +262,43 @@ const OrderScreen = () => {
                 ))}
               </div>
             </div>
-
             {/* Order Summary */}
-            <div className="bg-gradient-to-r from-indigo-50/50 to-blue-50/50 rounded-2xl p-6 border border-indigo-100/50">
-              <div className="flex items-center space-x-3 mb-6">
+            <div className="bg-gradient-to-r from-indigo-50/50 to-blue-50/50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-indigo-100/50">
+              <div className="flex items-center gap-2 sm:gap-3 mb-4">
                 <CalculatorIcon />
-                <h2 className="text-xl font-medium text-slate-700">Order Summary</h2>
+                <h2 className="text-lg sm:text-xl font-medium text-slate-700">Order Summary</h2>
               </div>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center py-2">
-                  <span className="text-slate-600">Tax Amount:</span>
-                  <span className="font-medium text-slate-700">${order.taxPrice}</span>
+              <div className="space-y-2 sm:space-y-3">
+                <div className="flex justify-between items-center py-1 sm:py-2">
+                  <span className="text-slate-600 text-sm sm:text-base">Tax Amount:</span>
+                  <span className="font-medium text-slate-700 text-sm sm:text-base">${order.taxPrice}</span>
                 </div>
-                <div className="border-t border-slate-200/50 pt-3">
+                <div className="border-t border-slate-200/50 pt-2 sm:pt-3">
                   <div className="flex justify-between items-center">
                     <span className="text-lg font-medium text-slate-700">Total Amount:</span>
-                    <span className="text-2xl font-semibold text-slate-800">${order.totalPrice}</span>
+                    <span className="text-xl sm:text-2xl font-semibold text-slate-800">${order.totalPrice}</span>
                   </div>
                 </div>
               </div>
             </div>
-
             {/* Payment Section */}
             {!userInfo.isAdmin && !order.isPaid && (
-              <div className="bg-gradient-to-r from-blue-50/50 to-cyan-50/50 rounded-2xl p-6 border border-blue-100/50">
-                <div className="flex items-center space-x-3 mb-6">
+              <div className="bg-gradient-to-r from-blue-50/50 to-cyan-50/50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-blue-100/50">
+                <div className="flex items-center gap-2 sm:gap-3 mb-4">
                   <CreditCardIcon />
-                  <h2 className="text-xl font-medium text-slate-700">Payment</h2>
+                  <h2 className="text-lg sm:text-xl font-medium text-slate-700">Payment</h2>
                 </div>
                 {loadingPay && (
-                  <div className="flex justify-center py-8">
+                  <div className="flex justify-center py-6 sm:py-8">
                     <Loader />
                   </div>
                 )}
                 {isPending ? (
-                  <div className="flex justify-center py-8">
+                  <div className="flex justify-center py-6 sm:py-8">
                     <Loader />
                   </div>
                 ) : (
-                  <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-white/50">
+                  <div className="bg-white/60 backdrop-blur-sm rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/50">
                     <PayPalButtons
                       createOrder={createOrder}
                       onApprove={onApprove}
@@ -315,10 +308,9 @@ const OrderScreen = () => {
                 )}
               </div>
             )}
-
             {/* Payment Success Message */}
             {order.isPaid && (
-              <div className="bg-gradient-to-r from-emerald-50/50 to-green-50/50 rounded-2xl p-6 border border-emerald-100/50">
+              <div className="bg-gradient-to-r from-emerald-50/50 to-green-50/50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-emerald-100/50">
                 <Message variant="success">Payment completed successfully!</Message>
               </div>
             )}

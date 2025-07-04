@@ -65,23 +65,23 @@ const CourseListScreen = () => {
       </div>
     </div>
   ) : (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40 py-6 px-2 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-light text-slate-800 mb-6 tracking-tight">
+        <div className="text-center mb-8 sm:mb-12">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-light text-slate-800 mb-4 sm:mb-6 tracking-tight">
             <span className="font-medium bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
               Course Management
             </span>
           </h1>
-          <p className="text-lg text-slate-500 font-light max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg text-slate-500 font-light max-w-2xl mx-auto leading-relaxed">
             Manage and oversee all courses in your e-learning platform
           </p>
-          <div className="mt-6 flex justify-center">
-            <div className="w-16 h-0.5 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full opacity-60"></div>
+          <div className="mt-4 sm:mt-6 flex justify-center">
+            <div className="w-12 sm:w-16 h-0.5 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full opacity-60"></div>
           </div>
         </div>
 
-        <div className="bg-white/70 backdrop-blur-sm rounded-3xl border border-slate-200/60 shadow-sm overflow-hidden">
+        <div className="bg-white/70 backdrop-blur-sm rounded-2xl sm:rounded-3xl border border-slate-200/60 shadow-sm overflow-hidden">
           <div className="hidden lg:block overflow-x-auto">
             <table className="min-w-full">
               <thead className="bg-gradient-to-r from-slate-50/80 to-blue-50/40 backdrop-blur-sm border-b border-slate-200/60">
@@ -150,31 +150,31 @@ const CourseListScreen = () => {
             </table>
           </div>
 
-          <div className="lg:hidden space-y-4 p-6">
+          <div className="lg:hidden space-y-4 p-4 sm:p-6">
             {courses?.map((course, index) => (
               <div
                 key={course._id}
-                className="bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200/60 shadow-sm p-6 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300"
+                className="bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200/60 shadow-sm p-4 sm:p-6 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300"
               >
-                <div className="flex justify-between items-start mb-4">
+                <div className="flex flex-col xs:flex-row justify-between items-start xs:items-center mb-4 gap-2 xs:gap-4">
                   <div className="flex-1">
                     <Link
                       to={`/courses/${course._id}`}
-                      className="text-lg font-medium text-blue-600 hover:text-blue-700 transition-colors duration-300 hover:underline decoration-blue-300 underline-offset-4 block mb-2"
+                      className="text-base sm:text-lg font-medium text-blue-600 hover:text-blue-700 transition-colors duration-300 hover:underline decoration-blue-300 underline-offset-4 block mb-1"
                     >
                       {course.title}
                     </Link>
-                    <p className="text-sm text-slate-500 font-light">by {course.instructor.name}</p>
+                    <p className="text-xs sm:text-sm text-slate-500 font-light">by {course.instructor.name}</p>
                   </div>
                   <button
-                    className="bg-gradient-to-r from-red-500 to-red-600 text-white px-3 py-1.5 rounded-xl font-medium hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500/20 transition-all duration-300 shadow-lg shadow-red-500/20 hover:shadow-xl hover:shadow-red-500/25 text-sm"
+                    className="bg-gradient-to-r from-red-500 to-red-600 text-white px-3 py-1.5 rounded-xl font-medium hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500/20 transition-all duration-300 shadow-lg shadow-red-500/20 hover:shadow-xl hover:shadow-red-500/25 text-xs sm:text-sm"
                     onClick={() => handleDeleteCourse(course._id)}
                   >
                     Delete
                   </button>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="grid grid-cols-2 gap-3 text-xs sm:text-sm">
                   <div>
                     <span className="text-slate-500 font-light">Category:</span>
                     <div className="mt-1">

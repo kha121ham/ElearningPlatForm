@@ -39,7 +39,7 @@ const CoursesScreen = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-7xl">
+      <div className="container mx-auto px-2 sm:px-4 lg:px-8 py-6 sm:py-8 max-w-7xl">
         <div className="text-center mb-12">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-light text-slate-800 mb-4 tracking-tight">
             <span className="font-medium bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
@@ -135,9 +135,7 @@ const CoursesScreen = () => {
                         alt={course.title}
                         loading="lazy"
                         decoding="async"
-                        width="400"
-                        height="208"
-                        className="w-full h-48 sm:h-52 object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="w-full max-w-full h-48 sm:h-52 object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                       <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 border border-slate-200/50 shadow-sm">

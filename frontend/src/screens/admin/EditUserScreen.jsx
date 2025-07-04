@@ -51,19 +51,19 @@ const EditUserScreen = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40 py-6 px-2 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-light text-slate-800 mb-6 tracking-tight">
+        <div className="text-center mb-8 sm:mb-12">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-light text-slate-800 mb-4 sm:mb-6 tracking-tight">
             <span className="font-medium bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
               Edit User
             </span>
           </h1>
-          <p className="text-lg text-slate-500 font-light max-w-xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg text-slate-500 font-light max-w-xl mx-auto leading-relaxed">
             Update user permissions and role settings
           </p>
-          <div className="mt-6 flex justify-center">
-            <div className="w-16 h-0.5 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full opacity-60"></div>
+          <div className="mt-4 sm:mt-6 flex justify-center">
+            <div className="w-12 sm:w-16 h-0.5 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full opacity-60"></div>
           </div>
         </div>
 

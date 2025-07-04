@@ -31,7 +31,7 @@ const ContactScreen = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40 py-6 px-2 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-slate-800 mb-4 tracking-tight">
@@ -59,7 +59,7 @@ const ContactScreen = () => {
                   Reach out to us through any of these channels. We're here to help with your learning journey.
                 </p>
               </div>
-              
+
               <div className="space-y-6">
                 <div className="flex items-start space-x-4 group">
                   <div className="flex-shrink-0 w-12 h-12 bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200/60 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300">
@@ -73,7 +73,7 @@ const ContactScreen = () => {
                     <p className="text-slate-700 font-light">123 Learning St, Education City</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start space-x-4 group">
                   <div className="flex-shrink-0 w-12 h-12 bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200/60 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300">
                     <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -85,7 +85,7 @@ const ContactScreen = () => {
                     <p className="text-slate-700 font-light">+1 234 567 890</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start space-x-4 group">
                   <div className="flex-shrink-0 w-12 h-12 bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200/60 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300">
                     <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -110,7 +110,7 @@ const ContactScreen = () => {
                   Fill out the form below and we'll get back to you within 24 hours.
                 </p>
               </div>
-              
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-slate-600 mb-2">
@@ -127,7 +127,7 @@ const ContactScreen = () => {
                     required
                   />
                 </div>
-                
+
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-slate-600 mb-2">
                     Email Address
@@ -143,7 +143,7 @@ const ContactScreen = () => {
                     required
                   />
                 </div>
-                
+
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-slate-600 mb-2">
                     Message
@@ -159,7 +159,7 @@ const ContactScreen = () => {
                     required
                   ></textarea>
                 </div>
-                
+
                 <button
                   type="submit"
                   className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-3 px-6 rounded-2xl font-medium hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:ring-offset-2 focus:ring-offset-white transition-all duration-300 shadow-lg shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/25 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
@@ -178,14 +178,13 @@ const ContactScreen = () => {
             </div>
           </div>
         </div>
-        
+
         {status && status !== "Sending..." && (
           <div className="mt-8 text-center">
-            <div className={`inline-flex items-center px-6 py-3 rounded-2xl font-medium text-sm ${
-              status.includes("successfully")
+            <div className={`inline-flex items-center px-6 py-3 rounded-2xl font-medium text-sm ${status.includes("successfully")
                 ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
                 : "bg-red-50 text-red-700 border border-red-200"
-            } transition-all duration-300`}>
+              } transition-all duration-300`}>
               {status.includes("successfully") ? (
                 <div className="flex items-center space-x-2">
                   <div className="w-4 h-4 bg-emerald-500 rounded-full flex items-center justify-center">
