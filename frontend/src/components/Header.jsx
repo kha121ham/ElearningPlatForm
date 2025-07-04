@@ -70,41 +70,39 @@ const Header = () => {
             </svg>
           </button>
           {/* Nav links - desktop */}
-          <div className="hidden sm:flex flex-1 justify-center items-center gap-6">
-            <div className="flex flex-col sm:flex-row w-full justify-center sm:justify-start gap-2 sm:gap-0">
-              <Link to="/" className="text-gray-800 hover:text-blue-600 font-medium transition-all duration-300 hover:scale-105 relative group px-2 py-1 sm:py-0">
+          <div className="hidden sm:flex flex-1 justify-center items-center">
+            <nav className="flex flex-row items-center justify-center gap-6">
+              <Link to="/" className="text-gray-800 hover:text-blue-600 font-semibold transition-all duration-300 hover:scale-105 relative group px-3 py-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
                 Home
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:w-3/4 transition-all duration-300 rounded-full"></span>
               </Link>
-              <Link to="/courses" className="text-gray-800 hover:text-blue-600 font-medium transition-all duration-300 hover:scale-105 relative group px-2 py-1 sm:py-0">
+              <Link to="/courses" className="text-gray-800 hover:text-blue-600 font-semibold transition-all duration-300 hover:scale-105 relative group px-3 py-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
                 Courses
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:w-3/4 transition-all duration-300 rounded-full"></span>
               </Link>
-              <Link to="/about" className="text-gray-800 hover:text-blue-600 font-medium transition-all duration-300 hover:scale-105 relative group px-2 py-1 sm:py-0">
+              <Link to="/about" className="text-gray-800 hover:text-blue-600 font-semibold transition-all duration-300 hover:scale-105 relative group px-3 py-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
                 About
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:w-3/4 transition-all duration-300 rounded-full"></span>
               </Link>
-            </div>
+            </nav>
           </div>
           {/* Nav links - mobile dropdown */}
           {menuOpen && (
             <div className="sm:hidden absolute top-full left-0 w-full bg-white border-b border-slate-200 shadow-md animate-fade-in z-50">
-              <div className="flex flex-col items-center gap-4 py-4">
-                <div className="flex flex-col sm:flex-row w-full justify-center sm:justify-start gap-2 sm:gap-0">
-                  <Link to="/" className="text-gray-800 hover:text-blue-600 font-medium transition-all duration-300 hover:scale-105 relative group px-2 py-1 sm:py-0">
-                    Home
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:w-full transition-all duration-300 rounded-full"></span>
-                  </Link>
-                  <Link to="/courses" className="text-gray-800 hover:text-blue-600 font-medium transition-all duration-300 hover:scale-105 relative group px-2 py-1 sm:py-0">
-                    Courses
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:w-full transition-all duration-300 rounded-full"></span>
-                  </Link>
-                  <Link to="/about" className="text-gray-800 hover:text-blue-600 font-medium transition-all duration-300 hover:scale-105 relative group px-2 py-1 sm:py-0">
-                    About
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:w-full transition-all duration-300 rounded-full"></span>
-                  </Link>
-                </div>
-              </div>
+              <nav className="flex flex-col items-center justify-center gap-2 py-4">
+                <Link to="/" className="text-gray-800 hover:text-blue-600 font-semibold transition-all duration-300 hover:scale-105 relative group px-4 py-2 rounded-lg w-4/5 text-center focus:outline-none focus:ring-2 focus:ring-blue-400">
+                  Home
+                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:w-3/4 transition-all duration-300 rounded-full"></span>
+                </Link>
+                <Link to="/courses" className="text-gray-800 hover:text-blue-600 font-semibold transition-all duration-300 hover:scale-105 relative group px-4 py-2 rounded-lg w-4/5 text-center focus:outline-none focus:ring-2 focus:ring-blue-400">
+                  Courses
+                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:w-3/4 transition-all duration-300 rounded-full"></span>
+                </Link>
+                <Link to="/about" className="text-gray-800 hover:text-blue-600 font-semibold transition-all duration-300 hover:scale-105 relative group px-4 py-2 rounded-lg w-4/5 text-center focus:outline-none focus:ring-2 focus:ring-blue-400">
+                  About
+                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:w-3/4 transition-all duration-300 rounded-full"></span>
+                </Link>
+              </nav>
             </div>
           )}
           <div className="flex items-center gap-2 sm:gap-4 md:gap-6 mt-2 sm:mt-0 w-full sm:w-auto justify-center sm:justify-end">
@@ -161,7 +159,7 @@ const Header = () => {
                 </button>
 
                 {isDropdownOpen && (
-                  <div className="absolute right-0 mt-3 w-56 bg-white/98 backdrop-blur-md rounded-2xl shadow-xl shadow-gray-200/60 py-2 z-50 transition-all duration-200 border border-gray-300">
+                  <div className="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-xl shadow-gray-200/60 py-2 z-50 transition-all duration-200 border border-gray-300">
                     <div className="px-4 py-3 border-b border-gray-200">
                       <p className="text-sm font-semibold text-gray-900">{userInfo.name}</p>
                       <p className="text-xs text-gray-600 font-medium">{userInfo.email}</p>
